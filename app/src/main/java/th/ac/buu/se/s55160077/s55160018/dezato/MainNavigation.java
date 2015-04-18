@@ -16,7 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 
@@ -37,6 +39,14 @@ public class MainNavigation extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_navigation);
+
+        int[] resId = { R.drawable.ic_home, R.drawable.ic_person, R.drawable.ic_logout };
+
+        String[] list = { getString(R.string.title_section1),
+                getString(R.string.title_section2),
+                getString(R.string.title_section3), };
+
+        MenuAdapter adapter = new MenuAdapter(getApplicationContext(), list, resId);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
