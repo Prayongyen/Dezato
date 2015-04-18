@@ -4,7 +4,12 @@
     android:layout_height="match_parent">
 
     <GridView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:columnWidth="80dp"
+        android:numColumns="3"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="15dp"
+        android:stretchMode="columnWidth"
         android:id="@+id/tableGridView" />
 </LinearLayout>
