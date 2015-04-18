@@ -8,6 +8,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -71,6 +72,8 @@ public class MainNavigation extends Activity
     }
 
     public void onSectionAttached(int number) {
+
+
         switch (number) {
             case 1:
                 mTitle = getString(R.string.title_section1);
