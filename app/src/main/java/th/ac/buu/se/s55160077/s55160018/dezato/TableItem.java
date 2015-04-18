@@ -6,27 +6,40 @@ import android.graphics.drawable.Drawable;
  * Created by prayong on 18/4/2558.
  */
 public class TableItem {
-    private Drawable icon;       // the drawable for the ListView item ImageView
-    private String title;        // the text for the GridView item title
+    private Drawable imgTable;       // the drawable for the ListView item ImageView
+    private String txtTableNo;        // the text for the GridView item title
+    private String txtTableMessage;
 
-    public Drawable getIcon() {
-        return icon;
+    public Drawable getImgTable() {
+        return imgTable;
     }
 
-    public void setIcon(Drawable icon) {
-        this.icon = icon;
+    public void setImgTable(Drawable imgTable) {
+        this.imgTable = imgTable;
     }
 
-    public String getTitle() {
-        return title;
+    public String getTxtTableNo() {
+        return txtTableNo;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTxtTableNo(String txtTableNo) {
+        this.txtTableNo = txtTableNo;
     }
 
-    public TableItem(Drawable icon, String title) {
-        this.icon = icon;
-        this.title = title;
+    public String getTxtTableMessage() {
+        return txtTableMessage;
+    }
+
+    public void setTxtTableMessage(String txtTableMessage) {
+        this.txtTableMessage = txtTableMessage;
+    }
+
+    public TableItem() {
+    }
+
+    public TableItem(Drawable imgTable, String txtTableNo,String txtTableMessage) {
+        this.imgTable = imgTable;
+        this.txtTableNo = txtTableNo;
+        this.txtTableMessage = txtTableMessage;
     }
 }

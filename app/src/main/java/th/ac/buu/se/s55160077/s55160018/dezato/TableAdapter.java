@@ -1,6 +1,7 @@
 package th.ac.buu.se.s55160077.s55160018.dezato;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,8 @@ public class TableAdapter extends BaseAdapter {
             // initialize the view holder
             viewHolder = new ViewHolder();
             viewHolder.imgTable = (ImageView) convertView.findViewById(R.id.imgTable);
-            viewHolder.txtTable = (TextView) convertView.findViewById(R.id.txtTable);
+            viewHolder.txtTableNo = (TextView) convertView.findViewById(R.id.txtTableNo);
+            viewHolder.txtTableMessage = (TextView) convertView.findViewById(R.id.txtTableMessage);
             convertView.setTag(viewHolder);
         } else {
             // recycle the already inflated view
@@ -58,8 +60,9 @@ public class TableAdapter extends BaseAdapter {
 
         // update the item view
         TableItem item = mItems.get(position);
-        viewHolder.imgTable.setImageDrawable(item.getIcon());
-        viewHolder.txtTable.setText(item.getTitle());
+        viewHolder.imgTable.setImageDrawable(item.getImgTable());
+        viewHolder.txtTableNo.setText(item.getTxtTableNo());
+        viewHolder.txtTableMessage.setText(item.getTxtTableMessage());
 
         return convertView;
     }
@@ -72,6 +75,7 @@ public class TableAdapter extends BaseAdapter {
      */
     private static class ViewHolder {
         ImageView imgTable;
-        TextView txtTable;
+        TextView txtTableNo;
+        TextView txtTableMessage;
     }
 }

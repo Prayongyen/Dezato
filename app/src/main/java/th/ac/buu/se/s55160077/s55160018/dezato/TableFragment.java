@@ -6,16 +6,30 @@ package th.ac.buu.se.s55160077.s55160018.dezato;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -59,27 +73,7 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
         mItems = new ArrayList<TableItem>();
         Resources resources = getResources();
 
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "1"));
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "2"));
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "1"));
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "2"));
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "1"));
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "2"));
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "1"));
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "2"));
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "1"));
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "2"));
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "1"));
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "2"));
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "1"));
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "2"));
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "1"));
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "2"));
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "1"));
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "2"));
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "1"));
-        mItems.add(new TableItem(resources.getDrawable(R.drawable.table_free), "2"));
-
+        new TableJson().execute("http://10.103.1.6/rest_server/index.php/api/c_dz_table/tables/format/json");
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -127,7 +121,7 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
             // check that the fragment is still attached to activity
             if(mActivity != null) {
                 // add the new item to the data set
-                mItems.add(values[0]);
+                //mItems.add(values[0]);
 
                 // notify the adapter
                 mAdapter.notifyDataSetChanged();
@@ -138,8 +132,69 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
         protected void onPostExecute(Integer result) {
             // check that the fragment is still attached to activity
             if(mActivity != null) {
-                Toast.makeText(mActivity, "55", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mActivity, "55", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private class TableJson extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            Drawable imgTable;
+            String txtTableMessage = null;
+            JSONArray jsonarray;
+            Resources resources = getResources();
+            String url = "http://10.103.1.6/rest_server/index.php/api/c_dz_table/tables/format/json";
+            RestService re = new RestService();
+            JSONObject jsonobject =  re.doGet(url);
+            try {
+                jsonarray = jsonobject.getJSONArray("tables");
+
+                for (int i = 0; i < jsonarray.length(); i++) {
+                    jsonobject = jsonarray.getJSONObject(i);
+                    String TableStatus = jsonobject.getString("table_status");
+                    String txtTableNo = jsonobject.getString("table_no");
+
+                    if(TableStatus.equals("F"))
+                    {
+                        imgTable = resources.getDrawable(R.drawable.table_free);
+                        txtTableMessage = "FREE";
+                    }
+                    else if(TableStatus.equals("E"))
+                    {
+                        imgTable = resources.getDrawable(R.drawable.table_eating);
+                        txtTableMessage = "EAT";
+                    }
+                    else
+                    {
+                        imgTable = resources.getDrawable(R.drawable.table_reserved);
+                        String Time = jsonobject.getString("res_time");
+
+                        DateFormat df = new SimpleDateFormat("yyyy-MM-d HH:mm:ss");
+                        try {
+                            Date date = null;
+                            date = df.parse(Time);
+                            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                            txtTableMessage = sdf.format(date);
+
+                        } catch (ParseException e) {
+                            // To change body of catch statement use File | Settings | File Templates.
+                            e.printStackTrace();
+                        }
+
+                    }
+                    mItems.add(new TableItem(imgTable, txtTableNo,txtTableMessage));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
     }
 }
