@@ -110,7 +110,11 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
     }
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        TableItem item = mItems.get(position);
+
+        // do something
+        Toast.makeText(getActivity(), item.getTxtTableNo(), Toast.LENGTH_SHORT).show();
 
     }
 
