@@ -6,7 +6,7 @@
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="70dp"
-        android:background="@drawable/loginbg">
+        android:background="@drawable/listbg">
 
         <ImageView
             android:layout_width="63dp"
