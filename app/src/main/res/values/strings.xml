@@ -16,4 +16,6 @@
 
     <string name="action_example">Example action</string>
     <string name="title_activity_profile">ProfileActivity</string>
+
+    <string name="login_error_message">Username or Password is incorrect.</string>
 </resources>
