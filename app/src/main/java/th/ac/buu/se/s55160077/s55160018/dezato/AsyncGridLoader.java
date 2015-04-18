@@ -24,10 +24,11 @@ public class AsyncGridLoader extends AsyncTask<PackageManager, TableItem, Intege
             for(ApplicationInfo appInfo : appInfoList) {
                 Drawable icon = packageManager.getApplicationIcon(appInfo);
                 CharSequence label = packageManager.getApplicationLabel(appInfo);
+                CharSequence label1 = packageManager.getApplicationLabel(appInfo);
 
                 if(icon != null && label != null) {
                     // update the UI thread
-                    publishProgress(new TableItem(icon, label.toString()));
+                    publishProgress(new TableItem(icon, label.toString(),label1.toString()));
                     index++;
                 }
             }

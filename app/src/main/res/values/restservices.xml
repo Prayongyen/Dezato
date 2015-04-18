@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="show_table">http://10.103.1.6/rest_server/index.php/api/c_dz_table/tables/format/json</string>
+</resources>

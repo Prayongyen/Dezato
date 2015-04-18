@@ -47,7 +47,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("TEST","HELLO");
+
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         SectionsPagerAdapter mSectionsPagerAdapter;
         ViewPager mViewPager;
@@ -61,7 +61,7 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        Log.d("TEST","HELLO1");
+
         super.onDestroyView();
     }
 
