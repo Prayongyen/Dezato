@@ -103,8 +103,6 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
     }
     @Override
     public void onDetach() {
-
-
         super.onDetach();
     }
 
