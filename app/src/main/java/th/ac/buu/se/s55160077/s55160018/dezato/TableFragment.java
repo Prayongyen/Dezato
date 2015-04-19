@@ -430,7 +430,7 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
                             txtTableMessage = sdf.format(date);
 
                         } catch (ParseException e) {
-                            // To change body of catch statement use File | Settings | File Templates.
+                            // To change body of catch statement use File | Settings | File Templates..
                             e.printStackTrace();
                         }
 
