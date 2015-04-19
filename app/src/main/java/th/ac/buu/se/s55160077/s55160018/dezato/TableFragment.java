@@ -154,14 +154,21 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
 
         if(item.getTxtTableStatus().equals("F"))
         {
-
+            item.setTxtTableStatus("E");
+            new TableUpdateEating().execute(item);
         }
         else if(item.getTxtTableStatus().equals("E"))
         {
-
+            setTableShared(item.getTxtTableNo());
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, BiiFragment.newInstance(1))
+                    .addToBackStack("tag")
+                    .commit();
         }
         else
         {
+            setTableShared(item.getTxtTableNo());
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.container, ReserveInfoFragment.newInstance(position))
@@ -187,7 +194,7 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
                     if(menuItem.getItemId() == R.id.eating)
                     {
                         item.setTxtTableStatus("E");
-                        new TableEatingJson().execute(item);
+                        new TableUpdateEating().execute(item);
                     }
                     else if(menuItem.getItemId() == R.id.reserve)
                     {
@@ -211,9 +218,19 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
 
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    if(menuItem.getItemId() == R.id.eating)
+                    if(menuItem.getItemId() == R.id.orderbill)
                     {
-                        Toast.makeText(getActivity(), "Eating", Toast.LENGTH_SHORT).show();
+                        setTableShared(item.getTxtTableNo());
+                        FragmentManager fragmentManager = getFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.container, BiiFragment.newInstance(1))
+                                .addToBackStack("tag")
+                                .commit();
+                    }
+                    else if((menuItem.getItemId() == R.id.ceating))
+                    {
+                        item.setTxtTableStatus("F");
+                        new TableUpdateFree().execute(item);
                     }
                     return false;
                 }
@@ -230,7 +247,13 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
                 public boolean onMenuItemClick(MenuItem menuItem) {
                     if(menuItem.getItemId() == R.id.eating)
                     {
-                        Toast.makeText(getActivity(), "Eating", Toast.LENGTH_SHORT).show();
+                        item.setTxtTableStatus("E");
+                        new TableUpdateEating().execute(item);
+                    }
+                    else if(menuItem.getItemId() == R.id.creserve)
+                    {
+                        item.setTxtTableStatus("F");
+                        new TableUpdateFree().execute(item);
                     }
                     return false;
                 }
@@ -275,7 +298,7 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
             }
         }
     }
-    private class TableEatingJson extends AsyncTask<TableItem, Integer, JSONObject> {
+    private class TableUpdateFree extends AsyncTask<TableItem, Integer, JSONObject> {
 
 
         @Override
@@ -291,7 +314,39 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
         @Override
         protected void onPostExecute(JSONObject s) {
             try {
-                
+
+                if(s.getString("message").equals("OK"))
+                {
+                    Toast.makeText(getActivity(), "Table "+ s.getString("txtTableNo") +" Cancel", Toast.LENGTH_SHORT).show();
+                    //REFRESH
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, TableFragment.newInstance(1))
+                            .commit();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            super.onPostExecute(s);
+        }
+    }
+    private class TableUpdateEating extends AsyncTask<TableItem, Integer, JSONObject> {
+
+
+        @Override
+        protected JSONObject doInBackground(TableItem... tableItems) {
+            SharedPreferences sp = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
+            String ip = sp.getString("IP","");
+            String url = "http://"+ip+getString(R.string.update_table);
+            RestService re = new RestService();
+            JSONObject resultJson = re.putTableEating(url,tableItems[0]);
+            return resultJson;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject s) {
+            try {
+
                 if(s.getString("message").equals("OK"))
                 {
                     Toast.makeText(getActivity(), "Table "+ s.getString("txtTableNo") +" Eating", Toast.LENGTH_SHORT).show();
@@ -303,7 +358,7 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
                     //CALL ORDER
                     setTableShared(s.getString("txtTableNo"));
                     fragmentManager.beginTransaction()
-                            .replace(R.id.container, ReserveFragment.newInstance(1))
+                            .replace(R.id.container, BiiFragment.newInstance(1))
                             .addToBackStack("tag")
                             .commit();
                 }

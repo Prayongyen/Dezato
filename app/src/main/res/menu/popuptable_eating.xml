@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/order"
+        android:id="@+id/orderbill"
         android:showAsAction="ifRoom|withText"
-        android:title="Order"
+        android:title="Order &amp; Check Bill"
         android:visible="true"/>
     <item
-        android:id="@+id/bill"
+        android:id="@+id/ceating"
         android:showAsAction="ifRoom|withText"
-        android:title="Check Bill"
+        android:title="Cancel Eating"
         android:visible="true"/>
 </menu>
