@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
@@ -126,7 +127,7 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
         gridView.setOnItemLongClickListener(this);
 
         //start loading
-       mLoader = new AsyncTableGridLoader();
+        mLoader = new AsyncTableGridLoader();
         mLoader.execute(mActivity.getPackageManager());
 
 
@@ -174,7 +175,7 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-        TableItem item = mItems.get(position);
+        final TableItem item = mItems.get(position);
         // do something
         if(item.getTxtTableStatus().equals("F"))
         {
@@ -185,10 +186,12 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
                 public boolean onMenuItemClick(MenuItem menuItem) {
                     if(menuItem.getItemId() == R.id.eating)
                     {
-                        Toast.makeText(getActivity(), "Eating", Toast.LENGTH_SHORT).show();
+                        item.setTxtTableStatus("E");
+                        new TableEatingJson().execute(item);
                     }
                     else if(menuItem.getItemId() == R.id.reserve)
                     {
+                        setTableShared(item.getTxtTableNo());
                         FragmentManager fragmentManager = getFragmentManager();
                         fragmentManager.beginTransaction()
                                 .replace(R.id.container, ReserveFragment.newInstance(position))
@@ -241,6 +244,14 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
         return true;
     }
 
+    public void setTableShared(String txtTableNo)
+    {
+        SharedPreferences sp = getActivity().getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("txtTableNo", txtTableNo);
+        editor.commit();
+    }
+
 
     private class AsyncTableGridLoader extends AsyncGridLoader {
         @Override
@@ -262,6 +273,43 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
             if(mActivity != null) {
                 //Toast.makeText(mActivity, "55", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+    private class TableEatingJson extends AsyncTask<TableItem, Integer, JSONObject> {
+
+
+        @Override
+        protected JSONObject doInBackground(TableItem... tableItems) {
+            SharedPreferences sp = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
+            String ip = sp.getString("IP","");
+            String url = "http://"+ip+getString(R.string.update_table);
+            RestService re = new RestService();
+            JSONObject resultJson = re.putTableEating(url,tableItems[0]);
+            return resultJson;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject s) {
+            try {
+                if(s.getString("message").equals("OK"))
+                {
+                    Toast.makeText(getActivity(), "Table "+ s.getString("txtTableNo") +" Eating", Toast.LENGTH_SHORT).show();
+                    //REFRESH
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, TableFragment.newInstance(1))
+                            .commit();
+                    //CALL ORDER
+                    setTableShared(s.getString("txtTableNo"));
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, ReserveFragment.newInstance(1))
+                            .addToBackStack("tag")
+                            .commit();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            super.onPostExecute(s);
         }
     }
 
