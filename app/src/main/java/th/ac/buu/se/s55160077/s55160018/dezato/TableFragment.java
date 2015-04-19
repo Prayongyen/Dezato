@@ -4,6 +4,7 @@ package th.ac.buu.se.s55160077.s55160018.dezato;
  * Created by prayong on 17/4/2558.
  */
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -15,6 +16,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,14 +75,40 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setHasOptionsMenu(true);
         // initialize the items list
         mItems = new ArrayList<TableItem>();
-        Resources resources = getResources();
         new TableJson().execute("");
+    }
+    public void onClickActionBar(View v)
+    {
+        if (v.getId() == R.id.btnRefresh) {
+            Toast.makeText(getActivity(), "you click on btnRefresh",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_refresh, menu);
+        super.onCreateOptionsMenu(menu, inflater);
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.btnRefresh : {
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, TableFragment.newInstance(1))
+                        .commit();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -161,7 +190,7 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
                         FragmentManager fragmentManager = getFragmentManager();
                         fragmentManager.beginTransaction()
                                 .replace(R.id.container, ReserveFragment.newInstance(position))
-                                .addToBackStack( "tag" )
+                                .addToBackStack("tag")
                                 .commit();
                     }
                     return false;
