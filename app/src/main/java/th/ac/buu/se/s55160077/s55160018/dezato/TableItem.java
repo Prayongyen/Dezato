@@ -6,10 +6,18 @@ import android.graphics.drawable.Drawable;
  * Created by prayong on 18/4/2558.
  */
 public class TableItem {
+    public String getTxtTableStatus() {
+        return TxtTableStatus;
+    }
+
+    public void setTxtTableStatus(String setTxtTableStatus) {
+        this.TxtTableStatus = setTxtTableStatus;
+    }
+
     private Drawable imgTable;       // the drawable for the ListView item ImageView
     private String txtTableNo;        // the text for the GridView item title
     private String txtTableMessage;
-    private String txtTableStatus;
+    private String TxtTableStatus;
 
     public Drawable getImgTable() {
         return imgTable;
@@ -38,18 +46,10 @@ public class TableItem {
     public TableItem() {
     }
 
-    public TableItem(Drawable imgTable, String txtTableNo,String txtTableMessage,String txtTableStatus) {
+    public TableItem(Drawable imgTable, String txtTableNo,String txtTableMessage,String TxtTableStatus) {
         this.imgTable = imgTable;
         this.txtTableNo = txtTableNo;
         this.txtTableMessage = txtTableMessage;
-        this.txtTableStatus = txtTableStatus;
-    }
-
-    public String getTxtTableStatus() {
-        return txtTableStatus;
-    }
-
-    public void setTxtTableStatus(String txtTableStatus) {
-        this.txtTableStatus = txtTableStatus;
+        this.TxtTableStatus = TxtTableStatus;
     }
 }

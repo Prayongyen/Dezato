@@ -401,8 +401,6 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
                 jsonarray = jsonobject.getJSONArray("tables");
                 int lengthObj = jsonarray.length();
                 for (int i = 0; i < lengthObj; i++) {
-                    int c = (i * 100 )/ lengthObj;
-                    publishProgress(c);
                     jsonobject = jsonarray.getJSONObject(i);
                     String TableStatus = jsonobject.getString("table_status");
                     String txtTableNo = jsonobject.getString("table_no");
@@ -436,6 +434,8 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
 
                     }
                     mItems.add(new TableItem(imgTable, txtTableNo,txtTableMessage,TableStatus));
+                    int c = (i * 100 )/ lengthObj;
+                    publishProgress(c);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
