@@ -44,7 +44,6 @@ public class LoginActivity extends Activity {
 
         EditText editIP = (EditText)findViewById(R.id.editIP);
         EditText editName = (EditText)findViewById(R.id.editUser);
-        EditText editPW = (EditText)findViewById(R.id.editPW);
 
         editIP.setText(sp.getString("IP",""));
         editName.setText(sp.getString("USERNAME",""));
