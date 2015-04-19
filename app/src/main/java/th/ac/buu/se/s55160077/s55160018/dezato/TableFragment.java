@@ -6,7 +6,9 @@ package th.ac.buu.se.s55160077.s55160018.dezato;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -35,7 +37,7 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class TableFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class TableFragment extends Fragment implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
     private List<TableItem> mItems;        // GridView items list
     private TableAdapter mAdapter;        // GridView adapter
     private Activity mActivity;                // the parent activity
@@ -72,8 +74,9 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
         // initialize the items list
         mItems = new ArrayList<TableItem>();
         Resources resources = getResources();
+        new TableJson().execute("");
 
-        new TableJson().execute("http://10.103.1.6/rest_server/index.php/api/c_dz_table/tables/format/json");
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,9 +90,10 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
         GridView gridView = (GridView) rootView.findViewById(R.id.tableGridView);
         gridView.setAdapter(mAdapter);
         gridView.setOnItemClickListener(this);
+        gridView.setOnItemLongClickListener(this);
 
-        // start loading
-        mLoader = new AsyncTableGridLoader();
+        //start loading
+       mLoader = new AsyncTableGridLoader();
         mLoader.execute(mActivity.getPackageManager());
 
 
@@ -112,11 +116,23 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         TableItem item = mItems.get(position);
-
         // do something
         Toast.makeText(getActivity(), item.getTxtTableNo(), Toast.LENGTH_SHORT).show();
 
     }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        TableItem item = mItems.get(position);
+        // do something
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, ReserveFragment.newInstance(position + 1))
+                .commit();
+        Toast.makeText(getActivity(), item.getTxtTableNo()+"HOLD", Toast.LENGTH_SHORT).show();
+        return true;
+    }
+
 
     private class AsyncTableGridLoader extends AsyncGridLoader {
         @Override
@@ -141,10 +157,20 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
         }
     }
 
-    private class TableJson extends AsyncTask<String, String, String> {
+    private class TableJson extends AsyncTask<String, Integer, String> {
+        ProgressDialog pd;
 
         @Override
         protected void onPreExecute() {
+            pd = new ProgressDialog(getActivity());
+            pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            pd.setTitle("Loading...");
+            pd.setMessage("Loading Table...");
+            pd.setCancelable(false);
+            pd.setIndeterminate(false);
+            pd.setMax(100);
+            pd.setProgress(0);
+            pd.show();
             super.onPreExecute();
 
         }
@@ -159,8 +185,10 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
             JSONObject jsonobject =  re.doGet(url);
             try {
                 jsonarray = jsonobject.getJSONArray("tables");
-
-                for (int i = 0; i < jsonarray.length(); i++) {
+                int lengthObj = jsonarray.length();
+                for (int i = 0; i < lengthObj; i++) {
+                    int c = (i * 100 )/ lengthObj;
+                    publishProgress(c);
                     jsonobject = jsonarray.getJSONObject(i);
                     String TableStatus = jsonobject.getString("table_status");
                     String txtTableNo = jsonobject.getString("table_no");
@@ -199,6 +227,18 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
                 e.printStackTrace();
             }
             return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            pd.setProgress(values[0]);
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            pd.dismiss();
+            super.onPostExecute(s);
         }
     }
 }
