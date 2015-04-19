@@ -56,7 +56,7 @@ public class BiiFragment extends Fragment {
         ActionBar ab = getActivity().getActionBar();
         ab.setTitle("Bill Table "+txtTableNo);
         //ab.setSubtitle("Services");
-        //inflater.inflate(R.menu.menu_back, menu);
+        inflater.inflate(R.menu.menu_neworder, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 }
