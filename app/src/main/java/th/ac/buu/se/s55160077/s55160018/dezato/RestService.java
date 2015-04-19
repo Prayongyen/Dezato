@@ -19,6 +19,54 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class RestService {
+    public JSONObject putTableEating(String url,TableItem item)
+    {
+        InputStream inputStream = null;
+        boolean resultBool = false;
+        JSONObject jsonResult = null;
+
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+            // 2. make POST request to the given URL
+
+            HttpPost httpPut = new
+                    HttpPost(url);
+            String json = "";
+            //              // 3. build jsonObject
+            //              JSONObject jsonObject2 = new JSONObject();
+            //              jsonObject2.put("idGuarderias", idG);
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+
+            jsonObject.put("txtTableStatus",item.getTxtTableStatus());
+            jsonObject.put("txtTableNo",item.getTxtTableNo());
+            //sonObject.put("guarderiasIdGuarderias",jsonObject2);
+            json = jsonObject.toString();
+            StringEntity se = new StringEntity(json);
+            // 6. set httpPost Entity
+            httpPut.setEntity(se);
+            // 7. Set some headers to inform server about the type of the content
+            httpPut.addHeader("Accept", "application/json");
+            httpPut.addHeader("Content-type", "application/json");
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPut);
+            //Try to add this
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            String result= convertStreamToString(inputStream);
+            // construct a JSON object with result
+             jsonResult =new JSONObject(result);
+
+            // Closing the input stream will trigger connection release
+            inputStream.close();
+
+        } catch (Exception e) {
+            //Log.d("InputStream", e.getLocalizedMessage());
+        }
+        return jsonResult;
+    }
     public String putOrder(int table,int foodId,int count)
     {
         Log.d("HEAD", "HELLO");

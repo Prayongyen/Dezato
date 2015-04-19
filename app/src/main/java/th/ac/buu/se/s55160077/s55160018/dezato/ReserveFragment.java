@@ -2,6 +2,8 @@ package th.ac.buu.se.s55160077.s55160018.dezato;
 
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -54,8 +56,10 @@ public class ReserveFragment extends Fragment{
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        SharedPreferences sp = getActivity().getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
+        String txtTableNo = sp.getString("txtTableNo","");
         ActionBar ab = getActivity().getActionBar();
-        ab.setTitle("Table 1");
+        ab.setTitle("Table "+txtTableNo);
         //ab.setSubtitle("Services");
         //inflater.inflate(R.menu.menu_back, menu);
         super.onCreateOptionsMenu(menu, inflater);
