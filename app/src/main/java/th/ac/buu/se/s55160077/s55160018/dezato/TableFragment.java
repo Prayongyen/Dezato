@@ -286,7 +286,7 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
             String txtTableMessage = null;
             JSONArray jsonarray;
             Resources resources = getResources();
-            String url = "http://10.103.1.12/rest_server/index.php/api/c_dz_table/tables/format/json";
+            String url = "http://10.103.1.6/rest_server/index.php/api/c_dz_table/tables/format/json";
             RestService re = new RestService();
             JSONObject jsonobject =  re.doGet(url);
             try {
