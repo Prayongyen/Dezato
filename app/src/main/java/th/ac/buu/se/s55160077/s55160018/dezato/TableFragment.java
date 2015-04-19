@@ -9,6 +9,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -286,7 +288,9 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
             String txtTableMessage = null;
             JSONArray jsonarray;
             Resources resources = getResources();
-            String url = "http://10.103.1.6/rest_server/index.php/api/c_dz_table/tables/format/json";
+            SharedPreferences sp = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
+            String ip = sp.getString("IP","");
+            String url = "http://"+ip+getString(R.string.show_table);
             RestService re = new RestService();
             JSONObject jsonobject =  re.doGet(url);
             try {
