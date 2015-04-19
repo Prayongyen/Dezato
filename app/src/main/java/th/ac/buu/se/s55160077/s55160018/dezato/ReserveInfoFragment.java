@@ -3,21 +3,16 @@ package th.ac.buu.se.s55160077.s55160018.dezato;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 /**
  * Created by prayong on 19/4/2558.
  */
-
-public class ReserveFragment extends Fragment{
+public class ReserveInfoFragment extends Fragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -28,15 +23,15 @@ public class ReserveFragment extends Fragment{
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static ReserveFragment newInstance(int sectionNumber) {
-        ReserveFragment fragment = new ReserveFragment();
+    public static ReserveInfoFragment newInstance(int sectionNumber) {
+        ReserveInfoFragment fragment = new ReserveInfoFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public ReserveFragment() {
+    public ReserveInfoFragment() {
     }
 
     @Override
@@ -48,7 +43,7 @@ public class ReserveFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_reserve, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_reserveinfo, container, false);
         return rootView;
     }
 

@@ -119,16 +119,30 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         TableItem item = mItems.get(position);
         // do something
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, ReserveFragment.newInstance(position + 1))
-                .commit();
-        Toast.makeText(getActivity(), item.getTxtTableNo(), Toast.LENGTH_SHORT).show();
+
+        if(item.getTxtTableStatus().equals("F"))
+        {
+
+        }
+        else if(item.getTxtTableStatus().equals("E"))
+        {
+
+        }
+        else
+        {
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, ReserveInfoFragment.newInstance(position))
+                    .addToBackStack( "tag" )
+                    .commit();
+        }
+
+        //Toast.makeText(getActivity(), item.getTxtTableNo(), Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
         TableItem item = mItems.get(position);
         // do something
         if(item.getTxtTableStatus().equals("F"))
@@ -141,6 +155,14 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
                     if(menuItem.getItemId() == R.id.eating)
                     {
                         Toast.makeText(getActivity(), "Eating", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(menuItem.getItemId() == R.id.reserve)
+                    {
+                        FragmentManager fragmentManager = getFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.container, ReserveFragment.newInstance(position))
+                                .addToBackStack( "tag" )
+                                .commit();
                     }
                     return false;
                 }
@@ -235,7 +257,7 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
             String txtTableMessage = null;
             JSONArray jsonarray;
             Resources resources = getResources();
-            String url = "http://10.103.1.12/rest_server/index.php/api/c_dz_table/tables/format/json";
+            String url = "http://10.103.1.6/rest_server/index.php/api/c_dz_table/tables/format/json";
             RestService re = new RestService();
             JSONObject jsonobject =  re.doGet(url);
             try {
