@@ -28,7 +28,7 @@ public class AsyncGridLoader extends AsyncTask<PackageManager, TableItem, Intege
 
                 if(icon != null && label != null) {
                     // update the UI thread
-                    publishProgress(new TableItem(icon, label.toString(),label1.toString()));
+                    publishProgress(new TableItem(icon, label.toString(),label1.toString(),label1.toString()));
                     index++;
                 }
             }

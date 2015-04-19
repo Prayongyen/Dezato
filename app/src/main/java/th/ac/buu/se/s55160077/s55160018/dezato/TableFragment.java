@@ -15,11 +15,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -117,6 +119,10 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         TableItem item = mItems.get(position);
         // do something
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, ReserveFragment.newInstance(position + 1))
+                .commit();
         Toast.makeText(getActivity(), item.getTxtTableNo(), Toast.LENGTH_SHORT).show();
 
     }
@@ -125,11 +131,60 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         TableItem item = mItems.get(position);
         // do something
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, ReserveFragment.newInstance(position + 1))
-                .commit();
-        Toast.makeText(getActivity(), item.getTxtTableNo()+"HOLD", Toast.LENGTH_SHORT).show();
+        if(item.getTxtTableStatus().equals("F"))
+        {
+            PopupMenu popupMenu = new PopupMenu(getActivity(), view);
+            popupMenu.setOnMenuItemClickListener((new PopupMenu.OnMenuItemClickListener() {
+
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    if(menuItem.getItemId() == R.id.eating)
+                    {
+                        Toast.makeText(getActivity(), "Eating", Toast.LENGTH_SHORT).show();
+                    }
+                    return false;
+                }
+            }));
+            popupMenu.inflate(R.menu.popuptablefree_menu);
+            popupMenu.show();
+        }
+        else if(item.getTxtTableStatus().equals("E"))
+        {
+            PopupMenu popupMenu = new PopupMenu(getActivity(), view);
+            popupMenu.setOnMenuItemClickListener((new PopupMenu.OnMenuItemClickListener() {
+
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    if(menuItem.getItemId() == R.id.eating)
+                    {
+                        Toast.makeText(getActivity(), "Eating", Toast.LENGTH_SHORT).show();
+                    }
+                    return false;
+                }
+            }));
+            popupMenu.inflate(R.menu.popuptable_eating);
+            popupMenu.show();
+        }
+        else
+        {
+            PopupMenu popupMenu = new PopupMenu(getActivity(), view);
+            popupMenu.setOnMenuItemClickListener((new PopupMenu.OnMenuItemClickListener() {
+
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    if(menuItem.getItemId() == R.id.eating)
+                    {
+                        Toast.makeText(getActivity(), "Eating", Toast.LENGTH_SHORT).show();
+                    }
+                    return false;
+                }
+            }));
+            popupMenu.inflate(R.menu.popuptablereserve);
+            popupMenu.show();
+        }
+
+
+        //Toast.makeText(getActivity(), item.getTxtTableNo()+"HOLD", Toast.LENGTH_SHORT).show();
         return true;
     }
 
@@ -221,7 +276,7 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
                         }
 
                     }
-                    mItems.add(new TableItem(imgTable, txtTableNo,txtTableMessage));
+                    mItems.add(new TableItem(imgTable, txtTableNo,txtTableMessage,TableStatus));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

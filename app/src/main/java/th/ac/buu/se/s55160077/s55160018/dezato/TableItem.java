@@ -9,6 +9,7 @@ public class TableItem {
     private Drawable imgTable;       // the drawable for the ListView item ImageView
     private String txtTableNo;        // the text for the GridView item title
     private String txtTableMessage;
+    private String txtTableStatus;
 
     public Drawable getImgTable() {
         return imgTable;
@@ -37,9 +38,18 @@ public class TableItem {
     public TableItem() {
     }
 
-    public TableItem(Drawable imgTable, String txtTableNo,String txtTableMessage) {
+    public TableItem(Drawable imgTable, String txtTableNo,String txtTableMessage,String txtTableStatus) {
         this.imgTable = imgTable;
         this.txtTableNo = txtTableNo;
         this.txtTableMessage = txtTableMessage;
+        this.txtTableStatus = txtTableStatus;
+    }
+
+    public String getTxtTableStatus() {
+        return txtTableStatus;
+    }
+
+    public void setTxtTableStatus(String txtTableStatus) {
+        this.txtTableStatus = txtTableStatus;
     }
 }
