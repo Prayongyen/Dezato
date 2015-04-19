@@ -1,6 +1,7 @@
 package th.ac.buu.se.s55160077.s55160018.dezato;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,8 +18,13 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Context c = this;
+        InternetChecking internetChecking = new InternetChecking(c);
+        if(!(internetChecking.isInternetConnected()))
+        {
+            internetChecking.ShowAlertNetwork();
+        }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
