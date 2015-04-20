@@ -22,4 +22,14 @@
     <string name="title_activity_profile">ProfileActivity</string>
 
     <string name="login_error_message">Username or Password is incorrect.</string>
+
+    <string-array
+        name="string_array">
+        <item>text_string</item>
+        <item>text_string</item>
+        <item>text_string</item>
+        <item>text_string</item>
+        <item>text_string</item>
+        <item>text_string</item>
+    </string-array>
 </resources>

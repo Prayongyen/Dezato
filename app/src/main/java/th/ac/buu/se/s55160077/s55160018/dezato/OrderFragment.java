@@ -8,11 +8,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -54,18 +59,24 @@ public class OrderFragment extends Fragment {
         ab.setTitle("Add Order Table "+txtTableNo);
         //ab.setSubtitle("Services");
         inflater.inflate(R.menu.menu_accept, menu);
+//        menu.findItem(R.id.navigation_drawer).setEnabled(false);
         super.onCreateOptionsMenu(menu, inflater);
+        NavigationDrawerFragment mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment.setMenuVisibility(false);
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_order, container, false);
         SectionsPagerAdapter mSectionsPagerAdapter;
         ViewPager mViewPager;
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) rootView.findViewById(R.id.Profilepager);
+        mViewPager = (ViewPager) rootView.findViewById(R.id.Foodpager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         return rootView;
@@ -75,6 +86,7 @@ public class OrderFragment extends Fragment {
 
         super.onDestroyView();
     }
+
 
     /**
      * A {@link android.support.v13.app.FragmentPagerAdapter} that returns a fragment corresponding to
@@ -91,11 +103,11 @@ public class OrderFragment extends Fragment {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             if(position == 0)
-                return IncomeFragment.newInstance(position);
+                return FoodFragment.newInstance(position,"F");
             else if(position == 1)
-                return IncomeFragment.newInstance(position);
+                return FoodFragment.newInstance(position,"W");
             else
-                return IncomeFragment.newInstance(position);
+                return FoodFragment.newInstance(position,"D");
         }
 
         @Override
