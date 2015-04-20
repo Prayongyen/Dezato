@@ -43,6 +43,7 @@ public class FoodFragment  extends ListFragment {
         View rootView = inflater.inflate(R.layout.fragment_foodlist, container, false);
         list_items = getResources().getStringArray(R.array.string_array);
         setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list_items));
+
         rootView.setFocusableInTouchMode(true);
         rootView.requestFocus();
         rootView.setOnKeyListener(new View.OnKeyListener() {

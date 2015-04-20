@@ -89,6 +89,7 @@
                 android:layout_marginTop="70dp"
                 android:background="#f50057"
                 android:textColor="#fff"
+                android:drawSelectorOnTop="true"
                 android:onClick="onLoginClick" />
 
             <ImageView

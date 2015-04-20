@@ -24,19 +24,21 @@ public class IncomeListAdapter extends BaseAdapter {
         this.mItem = item;
     }
 
+    @Override
     public int getCount() {
-
         return mItem.size();
     }
 
+    @Override
     public Object getItem(int position) {
         return mItem.get(position);
     }
 
+    @Override
     public long getItemId(int position) {
-
         return position;
     }
+
 
     public View getView(int position, View convertView, ViewGroup parent) {
         Log.d("TEST",  String.valueOf(position));
