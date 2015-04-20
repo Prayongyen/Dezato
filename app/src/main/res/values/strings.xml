@@ -11,6 +11,10 @@
     <string name="title_section2">Profile</string>
     <string name="title_section3">Logout</string>
 
+    <string name="title_food1">Food</string>
+    <string name="title_food2">Dessert</string>
+    <string name="title_food3">Drink</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -18,4 +22,14 @@
     <string name="title_activity_profile">ProfileActivity</string>
 
     <string name="login_error_message">Username or Password is incorrect.</string>
+
+    <string-array
+        name="string_array">
+        <item>text_string</item>
+        <item>text_string</item>
+        <item>text_string</item>
+        <item>text_string</item>
+        <item>text_string</item>
+        <item>text_string</item>
+    </string-array>
 </resources>
