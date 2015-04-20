@@ -1,6 +1,7 @@
 package th.ac.buu.se.s55160077.s55160018.dezato;
 
 import android.app.Fragment;
+import android.app.ListFragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,8 +28,8 @@ import java.util.List;
 /**
  * Created by prayong on 18/4/2558.
  */
-public class IncomeFragment extends Fragment {
-    private List<IncomeItem> mItems;        // GridView items list
+public class IncomeFragment extends ListFragment {
+    private List<IncomeItem> mItems = new ArrayList<IncomeItem>();      // GridView items list
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -51,9 +53,8 @@ public class IncomeFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mItems = new ArrayList<IncomeItem>();
         new RewardJson().execute("");
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -61,9 +62,10 @@ public class IncomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_income, container, false);
 
-        IncomeListAdapter adapter = new IncomeListAdapter(getActivity(), mItems);
-        ListView listView = (ListView) rootView.findViewById(R.id.listViewIncome);
-        listView.setAdapter(adapter);
+//        IncomeListAdapter adapter = new IncomeListAdapter(getActivity(), mItems);
+//        ListView listView = (ListView) rootView.findViewById(R.id.listViewIncome);
+//        listView.setAdapter(adapter);
+
         return rootView;
     }
 
@@ -75,9 +77,17 @@ public class IncomeFragment extends Fragment {
             String ip = sp.getString("IP","");
             String name = sp.getString("USERNAME","");
             String url = "http://"+ip+"/rest_server/index.php/api/c_dz_user_reward/rewardlist/id/"+name+"/format/json";
+
             RestService re = new RestService();
             JSONObject jsonobject =  re.doGet(url);
+
+            return jsonobject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonobject) {
             try {
+
                 JSONArray jsonarray;
                 jsonarray = jsonobject.getJSONArray("reward");
                 int lengthObj = jsonarray.length();
@@ -92,12 +102,20 @@ public class IncomeFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            return jsonobject;
-        }
+//            int listSize = mItems.size();
+//            Log.d("mItems", String.valueOf(listSize));
+//            for (int i = 0; i<listSize; i++){
+//                Log.d("mItems", String.valueOf(mItems.get(i)));
+//            }
 
-        @Override
-        protected void onPostExecute(JSONObject jsonobject) {
-
+            if(mItems.size() == 0){
+                setEmptyText("Nothing!!");
+            }
+            else
+            {
+                IncomeListAdapter adapter = new IncomeListAdapter(getActivity(), mItems);
+                setListAdapter(adapter);
+            }
 
             super.onPostExecute(jsonobject);
         }

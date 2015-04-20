@@ -6,6 +6,8 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -81,6 +83,13 @@ public class MainNavigation extends Activity
                         .commit();
                 break;
             case 2 :
+                SharedPreferences sp = getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putBoolean("LOGIN", false);
+                editor.commit();
+                final Intent mainIntent = new Intent(MainNavigation.this, LoginActivity.class);
+                MainNavigation.this.startActivity(mainIntent);
+                MainNavigation.this.finish();
                 break;
 
         }
