@@ -1,7 +1,6 @@
 package th.ac.buu.se.s55160077.s55160018.dezato;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +11,18 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * Created by LUKHINNN on 19/04/2015.
+ * Created by prayong on 20/4/2558.
  */
-
-public class IncomeListAdapter extends BaseAdapter {
+public class FoodListAdapter extends BaseAdapter {
     Context mContext;
-    List<IncomeItem> mItem;
+    List<FoodItem> mItem;
+    //ImageLoader imageLoader;
 
-    public IncomeListAdapter(Context context, List<IncomeItem> item){
+    public FoodListAdapter(Context context, List<FoodItem> item){
         this.mContext= context;
         this.mItem = item;
+        //imageLoader = new ImageLoader(context);
     }
-
     @Override
     public int getCount() {
         return mItem.size();
@@ -39,7 +38,7 @@ public class IncomeListAdapter extends BaseAdapter {
         return position;
     }
 
-
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder viewHolder;
@@ -47,12 +46,11 @@ public class IncomeListAdapter extends BaseAdapter {
         if(convertView == null) {
             // inflate the GridView item layout
             LayoutInflater inflater = LayoutInflater.from(mContext);
-            convertView = inflater.inflate(R.layout.fragment_income_item, parent, false);
+            convertView = inflater.inflate(R.layout.fragment_food_item, parent, false);
 
             // initialize the view holder
             viewHolder = new ViewHolder();
-            viewHolder.txtDate = (TextView) convertView.findViewById(R.id.textViewDate);
-            viewHolder.txtMoney = (TextView) convertView.findViewById(R.id.textViewMoney);
+            viewHolder.food_name = (TextView) convertView.findViewById(R.id.food_name);
             convertView.setTag(viewHolder);
         } else {
             // recycle the already inflated view
@@ -60,15 +58,14 @@ public class IncomeListAdapter extends BaseAdapter {
         }
 
         // update the item view
-        IncomeItem item = mItem.get(position);
-        viewHolder.txtDate.setText(item.getTxtDate());
-        viewHolder.txtMoney.setText(item.getTxtMoney());
-
+        FoodItem item = mItem.get(position);
+        viewHolder.food_name.setText(item.getFood_name());
         return convertView;
     }
-
     private static class ViewHolder {
-        TextView txtDate;
-        TextView txtMoney;
+        ImageView imgFood;
+        TextView food_name;
+        TextView food_price;
     }
+
 }

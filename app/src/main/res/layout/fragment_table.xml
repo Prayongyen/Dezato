@@ -17,4 +17,13 @@
         android:drawSelectorOnTop="true"
         android:id="@+id/tableGridView" />
 
+    <TextView
+        android:id="@+id/empty_grid_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:textSize="35dp"
+        android:text="Table is Empty"
+        android:visibility="gone"
+        android:layout_margin="50dp" />
+
 </RelativeLayout>

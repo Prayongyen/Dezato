@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,7 +29,7 @@ import java.util.List;
 /**
  * Created by prayong on 18/4/2558.
  */
-public class IncomeFragment extends ListFragment {
+public class IncomeFragment extends ListFragment implements AdapterView.OnItemClickListener{
     private List<IncomeItem> mItems = new ArrayList<IncomeItem>();      // GridView items list
     /**
      * The fragment argument representing the section number for this
@@ -69,6 +70,10 @@ public class IncomeFragment extends ListFragment {
         return rootView;
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+    }
+
     private class RewardJson extends AsyncTask<String, Integer, JSONObject> {
         @Override
         protected JSONObject doInBackground(String... params) {
@@ -83,6 +88,7 @@ public class IncomeFragment extends ListFragment {
 
             return jsonobject;
         }
+
 
         @Override
         protected void onPostExecute(JSONObject jsonobject) {

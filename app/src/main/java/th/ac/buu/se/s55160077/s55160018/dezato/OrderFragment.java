@@ -105,9 +105,9 @@ public class OrderFragment extends Fragment {
             if(position == 0)
                 return FoodFragment.newInstance(position,"F");
             else if(position == 1)
-                return FoodFragment.newInstance(position,"W");
+                return DessertFragment.newInstance(position,"W");
             else
-                return FoodFragment.newInstance(position,"D");
+                return DrinkFragment.newInstance(position,"D");
         }
 
         @Override

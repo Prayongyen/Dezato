@@ -2,6 +2,7 @@ package th.ac.buu.se.s55160077.s55160018.dezato;
 
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -71,7 +72,12 @@ public class ReserveInfoFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(getActivity(), "Start", Toast.LENGTH_SHORT).show();
+                SharedPreferences sp = getActivity().getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
+                String txtTableNo = sp.getString("txtTableNo","");
+                TableItem item = new TableItem();
+                item.setTxtTableStatus("E");
+                item.setTxtTableNo(txtTableNo);
+                new TableUpdateEating().execute(item);
             }
         });
         return rootView;
@@ -109,10 +115,6 @@ public class ReserveInfoFragment extends Fragment {
         }
         @Override
         protected JSONObject doInBackground(String... params) {
-            String res_cusname = "";
-            String res_cusphone = "";
-            String res_custime = "";
-            JSONArray jsonarray;
             SharedPreferences sp = getActivity().getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
             String txtTableNo = sp.getString("txtTableNo", "");
             sp = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
@@ -166,5 +168,51 @@ public class ReserveInfoFragment extends Fragment {
             pd.setProgress(values[0]);
             super.onProgressUpdate(values);
         }
+    }
+
+    private class TableUpdateEating extends AsyncTask<TableItem, Integer, JSONObject> {
+
+
+        @Override
+        protected JSONObject doInBackground(TableItem... tableItems) {
+            SharedPreferences sp = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
+            String ip = sp.getString("IP","");
+            String url = "http://"+ip+getString(R.string.update_table);
+            RestService re = new RestService();
+            JSONObject resultJson = re.putTableEating(url,tableItems[0]);
+            return resultJson;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject s) {
+            try {
+
+                if(s.getString("message").equals("OK"))
+                {
+                    Toast.makeText(getActivity(), "Table "+ s.getString("txtTableNo") +" Eating", Toast.LENGTH_SHORT).show();
+                    //REFRESH
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, TableFragment.newInstance(1))
+                            .commit();
+                    //CALL ORDER
+                    setTableShared(s.getString("txtTableNo"));
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, BiiFragment.newInstance(1))
+                            .addToBackStack("tag")
+                            .commit();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            super.onPostExecute(s);
+        }
+    }
+    public void setTableShared(String txtTableNo)
+    {
+        SharedPreferences sp = getActivity().getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("txtTableNo", txtTableNo);
+        editor.commit();
     }
 }

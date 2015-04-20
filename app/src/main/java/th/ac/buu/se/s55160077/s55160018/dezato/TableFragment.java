@@ -122,6 +122,8 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
 
         // initialize the GridView
         GridView gridView = (GridView) rootView.findViewById(R.id.tableGridView);
+
+
         gridView.setAdapter(mAdapter);
         gridView.setOnItemClickListener(this);
         gridView.setOnItemLongClickListener(this);
@@ -395,6 +397,7 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
             SharedPreferences sp = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
             String ip = sp.getString("IP","");
             String url = "http://"+ip+getString(R.string.show_table);
+            Log.d("TEST",url);
             RestService re = new RestService();
             JSONObject jsonobject =  re.doGet(url);
             try {
@@ -451,6 +454,11 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
 
         @Override
         protected void onPostExecute(String s) {
+            if(mItems.size() == 0)
+            {
+                GridView gridView = (GridView) getActivity().findViewById(R.id.tableGridView);
+                gridView.setEmptyView( getActivity().findViewById( R.id.empty_grid_view ) );
+            }
             pd.dismiss();
             super.onPostExecute(s);
         }

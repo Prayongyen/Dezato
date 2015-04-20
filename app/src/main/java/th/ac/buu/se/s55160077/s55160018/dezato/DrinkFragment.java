@@ -1,7 +1,6 @@
 package th.ac.buu.se.s55160077.s55160018.dezato;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,7 +11,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,7 +22,7 @@ import java.util.List;
 /**
  * Created by prayong on 20/4/2558.
  */
-public class FoodFragment  extends ListFragment {
+public class DrinkFragment  extends ListFragment {
     private List<FoodItem> mItems = new ArrayList<FoodItem>();
     String[] list_items;
     private static String status;
@@ -34,15 +32,15 @@ public class FoodFragment  extends ListFragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static FoodFragment newInstance(int sectionNumber,String status) {
-        FoodFragment.status = status;
-        FoodFragment fragment = new FoodFragment();
+    public static DrinkFragment newInstance(int sectionNumber,String status) {
+        DrinkFragment.status = status;
+        DrinkFragment fragment = new DrinkFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
     }
-    public FoodFragment() {
+    public DrinkFragment() {
     }
 
     @Override

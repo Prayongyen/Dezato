@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editText"
+            android:id="@+id/edtCustomer"
             android:layout_gravity="right|top"
             android:textColor="#000"
             android:hint="Customer Name"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editText2"
+            android:id="@+id/edtTel"
             android:layout_gravity="right|top"
             android:textColor="#000"
             android:hint="Phone Number"
@@ -83,24 +83,16 @@
             android:layout_marginLeft="30dp" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:id="@+id/button1"
-            android:layout_gravity="center"
-            android:layout_marginTop="-15dp"
-            android:layout_marginRight="50dp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="37dp"
+            android:layout_width="147dp"
+            android:layout_height="50dp"
             android:text="Reserve"
-            android:id="@+id/button"
+            android:id="@+id/btnReserve"
             android:layout_gravity="center"
             android:background="#f50057"
             android:textColor="#fff"
             android:layout_marginTop="-15dp"
-            android:layout_marginLeft="50dp" />
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp" />
     </FrameLayout>
 
 </LinearLayout>
