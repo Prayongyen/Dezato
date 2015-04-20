@@ -107,9 +107,17 @@ public class DrinkFragment  extends ListFragment {
 
                 for (int i = 0; i < lengthObj; i++) {
                     jsonobject = jsonarray.getJSONObject(i);
+                    String food_id = jsonobject.getString("food_id");
                     String food_name = jsonobject.getString("food_name");
+                    String food_type = jsonobject.getString("food_type");
+                    String food_path = jsonobject.getString("food_path");
+                    String food_price = jsonobject.getString("food_price");
                     FoodItem food = new FoodItem();
+                    food.setFood_id(food_id);
                     food.setFood_name(food_name);
+                    food.setFood_type(food_type);
+                    food.setFood_path(food_path);
+                    food.setFood_price(food_price);
                     mItems.add(food);
                 }
 

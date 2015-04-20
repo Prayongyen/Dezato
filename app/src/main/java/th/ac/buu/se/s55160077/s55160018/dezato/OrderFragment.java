@@ -103,17 +103,21 @@ public class OrderFragment extends Fragment {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             if(position == 0)
-                return FoodFragment.newInstance(position,"F");
+                return FoodOrderListFragment.newInstance(position);
             else if(position == 1)
-                return DessertFragment.newInstance(position,"W");
+                return FoodFragment.newInstance(position,"F");
+            else if(position == 2)
+                return DessertFragment.newInstance(position,"D");
             else
-                return DrinkFragment.newInstance(position,"D");
+                return DrinkFragment.newInstance(position,"W");
+
+
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         @Override
@@ -121,10 +125,12 @@ public class OrderFragment extends Fragment {
             Locale l = Locale.getDefault();
             switch (position) {
                 case 0:
-                    return getString(R.string.title_food1).toUpperCase(l);
+                    return "ORDER";
                 case 1:
-                    return getString(R.string.title_food2).toUpperCase(l);
+                    return getString(R.string.title_food1).toUpperCase(l);
                 case 2:
+                    return getString(R.string.title_food2).toUpperCase(l);
+                case 3:
                     return getString(R.string.title_food3).toUpperCase(l);
             }
             return null;
