@@ -51,6 +51,7 @@ public class FoodListAdapter extends BaseAdapter {
             // initialize the view holder
             viewHolder = new ViewHolder();
             viewHolder.food_name = (TextView) convertView.findViewById(R.id.food_name);
+            viewHolder.food_price = (TextView) convertView.findViewById(R.id.food_price);
             convertView.setTag(viewHolder);
         } else {
             // recycle the already inflated view
@@ -60,6 +61,7 @@ public class FoodListAdapter extends BaseAdapter {
         // update the item view
         FoodItem item = mItem.get(position);
         viewHolder.food_name.setText(item.getFood_name());
+        viewHolder.food_price.setText(item.getFood_price());
         return convertView;
     }
     private static class ViewHolder {

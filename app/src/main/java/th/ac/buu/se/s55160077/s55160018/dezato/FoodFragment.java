@@ -111,8 +111,10 @@ public class FoodFragment  extends ListFragment {
                 for (int i = 0; i < lengthObj; i++) {
                     jsonobject = jsonarray.getJSONObject(i);
                     String food_name = jsonobject.getString("food_name");
+                    String food_price = jsonobject.getString("food_price");
                     FoodItem food = new FoodItem();
                     food.setFood_name(food_name);
+                    food.setFood_price(food_price);
                     mItems.add(food);
                 }
 
