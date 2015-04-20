@@ -6,19 +6,45 @@
     android:orientation="vertical"
     android:padding="2dp"
     android:layout_gravity="center" >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/loginbg">
 
-    <TextView
-        android:id="@+id/count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="25dp" />
+        <SeekBar
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/size_seekbar"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="70dp" />
 
-    <SeekBar
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/size_seekbar"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="123"
+            android:textSize="35dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp" />
 
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/foodImg"
+            android:layout_gravity="center_horizontal|top"
+            android:src="@drawable/logo_small"
+            android:layout_marginTop="20dp" />
+        <Button
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:id="@+id/loginButton"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="#f50057"
+            android:textColor="#fff"
+            android:drawSelectorOnTop="true"
+            android:layout_marginBottom="18dp" />
+    </FrameLayout>
 </LinearLayout>
