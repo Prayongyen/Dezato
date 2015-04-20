@@ -45,5 +45,24 @@
             android:textColor="#fff"
             android:drawSelectorOnTop="true"
             android:layout_marginBottom="18dp" />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButtonLeft"
+            android:layout_gravity="left|bottom"
+            android:layout_marginBottom="70dp"
+            android:src="@drawable/leftbtn"
+            android:background="@color/text_primary"
+            android:layout_marginLeft="30dp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButtonRight"
+            android:layout_gravity="right|bottom"
+            android:layout_marginBottom="70dp"
+            android:src="@drawable/rightbtn"
+            android:background="@color/text_primary"
+            android:layout_marginRight="30dp" />
     </FrameLayout>
 </LinearLayout>
