@@ -90,7 +90,6 @@ public class DessertFragment  extends ListFragment {
             SharedPreferences sp = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
             String ip = sp.getString("IP","");
             String url = "http://"+ip+"/rest_server/index.php/api/c_dz_food/foodType/id/"+status+"/format/json";
-            Log.d("TEST", "keyCode: " + url);
 
             RestService re = new RestService();
             JSONObject jsonobject =  re.doGet(url);
@@ -126,10 +125,12 @@ public class DessertFragment  extends ListFragment {
 
             if(mItems.size() == 0){
                 setEmptyText("Nothing!!");
+
             }
             else
             {
                 FoodListAdapter adapter = new FoodListAdapter(getActivity(), mItems);
+                
                 setListAdapter(adapter);
             }
 
