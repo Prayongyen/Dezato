@@ -73,5 +73,8 @@ public class BiiFragment extends Fragment {
         //ab.setSubtitle("Services");
         inflater.inflate(R.menu.menu_neworder, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        NavigationDrawerFragment mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment.setMenuVisibility(true);
     }
 }
