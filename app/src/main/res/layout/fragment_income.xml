@@ -3,48 +3,15 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:id="@+id/scrollView"
         android:layout_gravity="center_horizontal">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/loginbg">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="06 March 2015"
-                    android:id="@+id/textView11"
-                    android:layout_gravity="left|center"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="15dp"
-                    android:textSize="25dp" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="275"
-                    android:id="@+id/textView12"
-                    android:layout_gravity="right|center"
-                    android:textStyle="bold"
-                    android:layout_marginRight="70dp"
-                    android:textSize="30dp" />
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:id="@+id/imageView6"
-                    android:layout_gravity="right|center"
-                    android:background="@drawable/ic_today"
-                    android:layout_marginRight="15dp" />
-            </FrameLayout>
-        </LinearLayout>
+
+        <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/listViewIncome" />
     </ScrollView>
 
 </LinearLayout>
