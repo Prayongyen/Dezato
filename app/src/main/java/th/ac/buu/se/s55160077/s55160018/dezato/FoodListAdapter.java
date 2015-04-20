@@ -3,6 +3,8 @@ package th.ac.buu.se.s55160077.s55160018.dezato;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 /**
@@ -23,6 +29,8 @@ public class FoodListAdapter extends BaseAdapter {
     Context mContext;
     List<FoodItem> mItem;
     ImageLoader imageLoader;
+    OrderItem orderItem;
+    int foodQty;
 
     public FoodListAdapter(Context context, List<FoodItem> item){
         this.mContext= context;
@@ -48,7 +56,7 @@ public class FoodListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder viewHolder;
-        FoodItem item = mItem.get(position);
+        final FoodItem item = mItem.get(position);
         if(convertView == null) {
             // inflate the GridView item layout
             LayoutInflater inflater = LayoutInflater.from(mContext);
@@ -75,15 +83,18 @@ public class FoodListAdapter extends BaseAdapter {
         final Button addOrder = (Button) convertView.findViewById(R.id.addOrder);
         addOrder.setTag(position); //For passing the list item index
         final View finalConvertView = convertView;
+
         addOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Dialog dialog = new Dialog(mContext);
-                dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+//                dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
                 dialog.setContentView(R.layout.dialog_seekbar);
-                dialog.setTitle("เลือกจำนวน");
-                dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.logo_small);
+//                dialog.setTitle("เลือกจำนวน");
+//                dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.logo_small);
                 dialog.setCancelable(true);
+
                 //there are a lot of settings, for dialog, check them all out!
                 dialog.show();
                 SeekBar seekbar = (SeekBar) dialog.findViewById(R.id.size_seekbar);
@@ -92,8 +103,8 @@ public class FoodListAdapter extends BaseAdapter {
 
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progresValue, boolean b) {
+                        foodQty = progresValue;
                         count.setText(String.valueOf(progresValue));
-
                     }
 
                     @Override
@@ -103,6 +114,15 @@ public class FoodListAdapter extends BaseAdapter {
 
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
+                        SharedPreferences sp = mContext.getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
+                        String txtTableNo = sp.getString("txtTableNo","");
+                        String order_no = sp.getString("order_no","");
+                        orderItem = new OrderItem();
+                        orderItem.setFood_id(item.getFood_id());
+                        orderItem.setOrder_no(order_no);
+                        orderItem.setOrder_qty(String.valueOf(foodQty));
+                        orderItem.setTable_id(txtTableNo);
+                        new AddFoodOrder().execute(orderItem);
                     }
                 });
             }
@@ -113,6 +133,25 @@ public class FoodListAdapter extends BaseAdapter {
         ImageView imgFood;
         TextView food_name;
         TextView food_price;
+    }
+    private class AddFoodOrder extends AsyncTask<OrderItem, Integer, JSONObject> {
+        @Override
+        protected JSONObject doInBackground(OrderItem... params) {
+
+            SharedPreferences sp = mContext.getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
+            String ip = sp.getString("IP","");
+            String url = "http://"+ip+"/rest_server/index.php/api/c_dz_order/order/format/json";
+            RestService re = new RestService();
+            JSONObject jsonobject =  re.AddFoodOrder(url,params[0]);
+
+            return jsonobject;
+        }
+
+
+        @Override
+        protected void onPostExecute(JSONObject jsonobject) {
+            super.onPostExecute(jsonobject);
+        }
     }
 
 }

@@ -67,6 +67,9 @@ public class BiiFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         SharedPreferences sp = getActivity().getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("order_no", "1");
+        editor.commit();
         String txtTableNo = sp.getString("txtTableNo","");
         ActionBar ab = getActivity().getActionBar();
         ab.setTitle("Bill Table "+txtTableNo);

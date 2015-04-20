@@ -19,6 +19,56 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class RestService {
+    public JSONObject AddFoodOrder(String url,OrderItem item)
+    {
+        InputStream inputStream = null;
+        boolean resultBool = false;
+        JSONObject jsonResult = null;
+
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+            // 2. make POST request to the given URL
+
+            HttpPost httpPut = new
+                    HttpPost(url);
+            String json = "";
+            //              // 3. build jsonObject
+            //              JSONObject jsonObject2 = new JSONObject();
+            //              jsonObject2.put("idGuarderias", idG);
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+
+            jsonObject.put("order_no",item.getOrder_no());
+            jsonObject.put("order_qty",item.getOrder_qty());
+            jsonObject.put("table_id",item.getTable_id());
+            jsonObject.put("food_id",item.getFood_id());
+            //sonObject.put("guarderiasIdGuarderias",jsonObject2);
+            json = jsonObject.toString();
+            StringEntity se = new StringEntity(json);
+            // 6. set httpPost Entity
+            httpPut.setEntity(se);
+            // 7. Set some headers to inform server about the type of the content
+            httpPut.addHeader("Accept", "application/json");
+            httpPut.addHeader("Content-type", "application/json");
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPut);
+            //Try to add this
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            String result= convertStreamToString(inputStream);
+            // construct a JSON object with result
+            jsonResult =new JSONObject(result);
+            Log.d("JSON",jsonResult.getString("message"));
+            // Closing the input stream will trigger connection release
+            inputStream.close();
+
+        } catch (Exception e) {
+            //Log.d("InputStream", e.getLocalizedMessage());
+        }
+        return jsonResult;
+    }
     public JSONObject putTableReserve(String url,ReserveItem item)
     {
         InputStream inputStream = null;
