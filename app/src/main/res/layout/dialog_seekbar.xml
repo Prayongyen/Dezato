@@ -24,7 +24,7 @@
             android:id="@+id/count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="35dp"
+            android:textSize="20dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp" />
 
@@ -38,8 +38,8 @@
         <Button
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:text="OK"
-            android:id="@+id/loginButton"
+            android:text="CONFIRM"
+            android:id="@+id/conbtn"
             android:layout_gravity="center_horizontal|bottom"
             android:background="#f50057"
             android:textColor="#fff"

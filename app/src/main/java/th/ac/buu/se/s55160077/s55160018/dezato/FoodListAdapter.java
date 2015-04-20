@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -54,6 +55,8 @@ public class FoodListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        SharedPreferences sp = mContext.getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
+        final String ip = sp.getString("IP","");
 
         ViewHolder viewHolder;
         final FoodItem item = mItem.get(position);
@@ -78,7 +81,7 @@ public class FoodListAdapter extends BaseAdapter {
         viewHolder.food_name.setText(item.getFood_name());
         viewHolder.food_price.setText(item.getFood_price());
         ImageView food_path = (ImageView) convertView.findViewById(R.id.food_path);
-        imageLoader.DisplayImage("http://10.103.1.6/foodimage/"+item.getFood_path(), food_path);
+        imageLoader.DisplayImage("http://"+ip+"/foodimage/"+item.getFood_path(), food_path);
 
         final Button addOrder = (Button) convertView.findViewById(R.id.addOrder);
         addOrder.setTag(position); //For passing the list item index
@@ -97,23 +100,28 @@ public class FoodListAdapter extends BaseAdapter {
 
                 //there are a lot of settings, for dialog, check them all out!
                 dialog.show();
-                SeekBar seekbar = (SeekBar) dialog.findViewById(R.id.size_seekbar);
+                final SeekBar seekbar = (SeekBar) dialog.findViewById(R.id.size_seekbar);
+                final ImageView foodImg = (ImageView) dialog.findViewById(R.id.foodImg);
+                imageLoader.DisplayImage("http://"+ip+"/foodimage/"+item.getFood_path(), foodImg);
                 final TextView count = (TextView) dialog.findViewById(R.id.count);
-                seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
+                final ImageButton imageButtonLeft = (ImageButton) dialog.findViewById(R.id.imageButtonLeft);
+                imageButtonLeft.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onProgressChanged(SeekBar seekBar, int progresValue, boolean b) {
-                        foodQty = progresValue;
-                        count.setText(String.valueOf(progresValue));
+                    public void onClick(View view) {
+                        seekbar.incrementProgressBy(-1);
                     }
-
+                });
+                final ImageButton imageButtonRight = (ImageButton) dialog.findViewById(R.id.imageButtonRight);
+                imageButtonRight.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {
-
+                    public void onClick(View view) {
+                        seekbar.incrementProgressBy(1);
                     }
-
+                });
+                final Button conbtn = (Button) dialog.findViewById(R.id.conbtn);
+                conbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {
+                    public void onClick(View view) {
                         SharedPreferences sp = mContext.getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
                         String txtTableNo = sp.getString("txtTableNo","");
                         String order_no = sp.getString("order_no","");
@@ -123,6 +131,24 @@ public class FoodListAdapter extends BaseAdapter {
                         orderItem.setOrder_qty(String.valueOf(foodQty));
                         orderItem.setTable_id(txtTableNo);
                         new AddFoodOrder().execute(orderItem);
+                    }
+                });
+                count.setText(item.getFood_name()+" : 0 Order");
+                seekbar.setMax(20);
+                seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progresValue, boolean b) {
+                        foodQty = progresValue;
+                        count.setText(item.getFood_name()+" : " +String.valueOf(progresValue)+" Order");
+                    }
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
                     }
                 });
             }
@@ -150,6 +176,15 @@ public class FoodListAdapter extends BaseAdapter {
 
         @Override
         protected void onPostExecute(JSONObject jsonobject) {
+            try {
+                if(jsonobject.getString("message").equals("OK"))
+                    Toast.makeText(mContext,"เพิ่มรายการสำเร็จ" , Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(mContext,"เพิ่มรายการไม่สำเร็จ" , Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
             super.onPostExecute(jsonobject);
         }
     }
