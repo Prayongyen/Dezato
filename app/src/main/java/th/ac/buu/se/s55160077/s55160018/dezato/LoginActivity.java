@@ -51,7 +51,7 @@ public class LoginActivity extends Activity {
         InternetChecking internetChecking = new InternetChecking(getApplicationContext());
         if(internetChecking.isInternetConnected())
         {
-            if (sp.getBoolean("LOGIN", false)){
+            if (sp.getBoolean("LOGIN",false) == true){
                 Intent mainIntent = new Intent(getApplicationContext(),MainNavigation.class);
                 startActivity(mainIntent);
                 finish();
