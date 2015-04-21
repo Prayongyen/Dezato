@@ -121,7 +121,6 @@ public class IncomeFragment extends ListFragment implements AdapterView.OnItemCl
             {
                 IncomeListAdapter adapter = new IncomeListAdapter(getActivity(), mItems);
                 setListAdapter(adapter);
-                setEmptyText("Nothing!!");
             }
 
             super.onPostExecute(jsonobject);

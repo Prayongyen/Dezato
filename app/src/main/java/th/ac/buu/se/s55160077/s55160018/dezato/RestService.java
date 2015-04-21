@@ -359,4 +359,52 @@ public class RestService {
         }
         return jsonObj;
     }
+
+    public JSONObject getOrderbyTableBill(String url,String table_no,String order_no)
+    {
+        InputStream inputStream = null;
+        boolean resultBool = false;
+        JSONObject jsonResult = null;
+
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+            // 2. make POST request to the given URL
+
+            HttpPost httpPut = new
+                    HttpPost(url);
+            String json = "";
+            //              // 3. build jsonObject
+            //              JSONObject jsonObject2 = new JSONObject();
+            //              jsonObject2.put("idGuarderias", idG);
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("table_no",table_no);
+            jsonObject.put("order_no",order_no);
+            //sonObject.put("guarderiasIdGuarderias",jsonObject2);
+            json = jsonObject.toString();
+            StringEntity se = new StringEntity(json);
+            // 6. set httpPost Entity
+            httpPut.setEntity(se);
+            // 7. Set some headers to inform server about the type of the content
+            httpPut.addHeader("Accept", "application/json");
+            httpPut.addHeader("Content-type", "application/json");
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPut);
+            //Try to add this
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            String result= convertStreamToString(inputStream);
+            // construct a JSON object with result
+            jsonResult =new JSONObject(result);
+
+            // Closing the input stream will trigger connection release
+            inputStream.close();
+
+        } catch (Exception e) {
+            //Log.d("InputStream", e.getLocalizedMessage());
+        }
+        return jsonResult;
+    }
 }

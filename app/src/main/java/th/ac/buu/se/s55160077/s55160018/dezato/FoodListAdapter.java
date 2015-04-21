@@ -91,7 +91,7 @@ public class FoodListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
 
-                Dialog dialog = new Dialog(mContext);
+                final Dialog dialog = new Dialog(mContext);
 //                dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
                 dialog.setContentView(R.layout.dialog_seekbar);
 //                dialog.setTitle("เลือกจำนวน");
@@ -131,6 +131,7 @@ public class FoodListAdapter extends BaseAdapter {
                         orderItem.setOrder_qty(String.valueOf(foodQty));
                         orderItem.setTable_id(txtTableNo);
                         new AddFoodOrder().execute(orderItem);
+                        dialog.dismiss();
                     }
                 });
                 count.setText(item.getFood_name()+" : 0 Order");
