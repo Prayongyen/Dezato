@@ -106,6 +106,7 @@ public class FoodFragment  extends ListFragment {
 
                 JSONArray jsonarray;
                 jsonarray = jsonobject.getJSONArray("foods");
+
                 int lengthObj = jsonarray.length();
 
                 for (int i = 0; i < lengthObj; i++) {

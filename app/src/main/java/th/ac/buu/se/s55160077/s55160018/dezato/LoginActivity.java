@@ -48,11 +48,20 @@ public class LoginActivity extends Activity {
         editIP.setText(sp.getString("IP",""));
         editName.setText(sp.getString("USERNAME",""));
 
-        if (sp.getBoolean("LOGIN", false)){
-            Intent mainIntent = new Intent(getApplicationContext(),MainNavigation.class);
-            startActivity(mainIntent);
-            finish();
+        InternetChecking internetChecking = new InternetChecking(getApplicationContext());
+        if(internetChecking.isInternetConnected())
+        {
+            if (sp.getBoolean("LOGIN", false)){
+                Intent mainIntent = new Intent(getApplicationContext(),MainNavigation.class);
+                startActivity(mainIntent);
+                finish();
+            }
         }
+        else
+        {
+            internetChecking.ShowAlertNetwork();
+        }
+
     }
 
 

@@ -25,11 +25,6 @@
 
     <string-array
         name="string_array">
-        <item>text_string</item>
-        <item>text_string</item>
-        <item>text_string</item>
-        <item>text_string</item>
-        <item>text_string</item>
-        <item>text_string</item>
+        <item>NO LIST ITEM</item>
     </string-array>
 </resources>
