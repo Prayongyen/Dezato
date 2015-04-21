@@ -87,7 +87,7 @@
                 android:id="@+id/loginButton"
                 android:layout_gravity="center"
                 android:layout_marginTop="70dp"
-                android:background="#f50057"
+                android:background="@drawable/pinkie_btn_default_holo_light"
                 android:textColor="#fff"
                 android:drawSelectorOnTop="true"
                 android:onClick="onLoginClick" />
