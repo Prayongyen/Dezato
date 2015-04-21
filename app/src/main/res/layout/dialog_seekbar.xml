@@ -17,7 +17,9 @@
             android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginBottom="100dp"  />
+            android:layout_marginBottom="100dp"
+            android:progressDrawable="@drawable/pinkie_scrubber_progress_horizontal_holo_light"
+            android:thumb="@drawable/pinkie_scrubber_control_selector_holo_light"/>
 
         <TextView
             android:id="@+id/count"

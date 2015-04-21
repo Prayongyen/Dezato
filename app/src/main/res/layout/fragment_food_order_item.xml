@@ -38,7 +38,8 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:id="@+id/textView13"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="152dp"
+                    android:layout_marginLeft="140dp"
+                    android:text="1"
                     android:textColor="#fff"
                     android:textStyle="bold"
                     android:textSize="25dp" />
@@ -49,7 +50,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:id="@+id/textView4"
                     android:layout_gravity="left|center_vertical"
-                    android:layout_marginLeft="105dp" />
+                    android:layout_marginLeft="110dp" />
             </FrameLayout>
         </LinearLayout>
     </ScrollView>
