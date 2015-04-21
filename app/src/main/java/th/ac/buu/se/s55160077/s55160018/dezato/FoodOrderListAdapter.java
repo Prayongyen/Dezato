@@ -62,12 +62,12 @@ public class FoodOrderListAdapter extends BaseAdapter {
         if (convertView == null) {
             // inflate the GridView item layout
             LayoutInflater inflater = LayoutInflater.from(mContext);
-            convertView = inflater.inflate(R.layout.fragment_food_item, parent, false);
+            convertView = inflater.inflate(R.layout.fragment_food_order_item, parent, false);
 
             // initialize the view holder
             viewHolder = new ViewHolder();
             viewHolder.food_name = (TextView) convertView.findViewById(R.id.food_name);
-            //viewHolder.food_qty = (TextView) convertView.findViewById(R.id.food_qty);
+            viewHolder.food_qty = (TextView) convertView.findViewById(R.id.food_qty);
             viewHolder.imgFood = (ImageView) convertView.findViewById(R.id.food_path);
             convertView.setTag(viewHolder);
         } else {
@@ -78,7 +78,7 @@ public class FoodOrderListAdapter extends BaseAdapter {
         // update the item view
 
         viewHolder.food_name.setText(item.getFood_name());
-       //viewHolder.food_qty.setText(item.getFood_qty());
+        viewHolder.food_qty.setText(item.getFood_qty());
         ImageView food_path = (ImageView) convertView.findViewById(R.id.food_path);
         imageLoader.DisplayImage("http://" + ip + "/foodimage/" + item.getFood_path(), food_path);
         return convertView;
