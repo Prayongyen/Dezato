@@ -10,16 +10,21 @@
         <item name="android:navigationBarColor">@color/primary_dark</item>
         <item name="android:popupMenuStyle">@style/PopupMenu</item>
         <item name="android:seekBarStyle">@style/SeekBarpinkie</item>
+        <item name="android:buttonStyle">@style/Buttonpinkie</item>
     </style>
 
     <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
         <item name="android:popupBackground">@color/text_primary</item>
     </style>
-
+    <!-- Seekbar -->
     <style name="SeekBarpinkie" parent="android:Widget.Holo.Light.SeekBar">
         <item name="android:progressDrawable">@drawable/pinkie_scrubber_progress_horizontal_holo_light</item>
         <item name="android:indeterminateDrawable">@drawable/pinkie_scrubber_progress_horizontal_holo_light</item>
         <item name="android:thumb">@drawable/pinkie_scrubber_control_selector_holo_light</item>
+    </style>
+    <!-- Button -->
+    <style name="Buttonpinkie" parent="android:Widget.Holo.Light.Button">
+        <item name="android:background">@drawable/pinkie_btn_default_holo_light</item>
     </style>
     <!-- Backward-compatible version of ?android:attr/buttonBarButtonStyle -->
     <style name="ButtonBarButton" />
