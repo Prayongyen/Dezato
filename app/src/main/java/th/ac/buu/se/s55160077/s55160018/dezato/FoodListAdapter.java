@@ -3,6 +3,7 @@ package th.ac.buu.se.s55160077.s55160018.dezato;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -82,6 +84,18 @@ public class FoodListAdapter extends BaseAdapter {
         viewHolder.food_price.setText(item.getFood_price());
         ImageView food_path = (ImageView) convertView.findViewById(R.id.food_path);
         imageLoader.DisplayImage("http://"+ip+"/foodimage/"+item.getFood_path(), food_path);
+        food_path.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sp = mContext.getSharedPreferences("IMG", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("PATH", "http://"+ip+"/foodimagebig/"+item.getFood_path());
+                editor.commit();
+
+                final Intent mainIntent = new Intent(mContext, ImageActivity.class);
+                mContext.startActivity(mainIntent);
+            }
+        });
 
         final Button addOrder = (Button) convertView.findViewById(R.id.addOrder);
         addOrder.setTag(position); //For passing the list item index

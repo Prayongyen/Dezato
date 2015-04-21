@@ -27,4 +27,5 @@
         name="string_array">
         <item>NO LIST ITEM</item>
     </string-array>
+    <string name="title_activity_image">ImageActivity</string>
 </resources>

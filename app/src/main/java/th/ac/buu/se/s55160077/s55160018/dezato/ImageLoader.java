@@ -25,7 +25,7 @@ import java.util.concurrent.Executors;
  * Created by prayong on 20/4/2558.
  */
 public class ImageLoader {
-
+    int size = 70;
     MemoryCache memoryCache = new MemoryCache();
     FileCache fileCache;
     private Map<ImageView, String> imageViews = Collections
@@ -35,6 +35,11 @@ public class ImageLoader {
     Handler handler = new Handler();
 
     public ImageLoader(Context context) {
+        fileCache = new FileCache(context);
+        executorService = Executors.newFixedThreadPool(5);
+    }
+    public ImageLoader(Context context,int size) {
+        this.size =size;
         fileCache = new FileCache(context);
         executorService = Executors.newFixedThreadPool(5);
     }
@@ -100,7 +105,7 @@ public class ImageLoader {
 
             // Find the correct scale value. It should be the power of 2.
             // Recommended Size 512
-            final int REQUIRED_SIZE = 70;
+            final int REQUIRED_SIZE = this.size;
             int width_tmp = o.outWidth, height_tmp = o.outHeight;
             int scale = 1;
             while (true) {
