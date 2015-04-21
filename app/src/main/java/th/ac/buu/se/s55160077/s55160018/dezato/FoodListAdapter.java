@@ -122,16 +122,23 @@ public class FoodListAdapter extends BaseAdapter {
                 conbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        SharedPreferences sp = mContext.getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
-                        String txtTableNo = sp.getString("txtTableNo","");
-                        String order_no = sp.getString("order_no","");
-                        orderItem = new OrderItem();
-                        orderItem.setFood_id(item.getFood_id());
-                        orderItem.setOrder_no(order_no);
-                        orderItem.setOrder_qty(String.valueOf(foodQty));
-                        orderItem.setTable_id(txtTableNo);
-                        new AddFoodOrder().execute(orderItem);
-                        dialog.dismiss();
+                        if(foodQty == 0)
+                        {
+                            Toast.makeText(mContext,"เพิ่มรายการไม่สำเร็จ" , Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            SharedPreferences sp = mContext.getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
+                            String txtTableNo = sp.getString("txtTableNo","");
+                            String order_no = sp.getString("order_no","");
+                            orderItem = new OrderItem();
+                            orderItem.setFood_id(item.getFood_id());
+                            orderItem.setOrder_no(order_no);
+                            orderItem.setOrder_qty(String.valueOf(foodQty));
+                            orderItem.setTable_id(txtTableNo);
+                            new AddFoodOrder().execute(orderItem);
+                            dialog.dismiss();
+                        }
                     }
                 });
                 count.setText(item.getFood_name()+" : 0 Order");
