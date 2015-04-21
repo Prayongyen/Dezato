@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="440dp"
+        android:id="@+id/scrollView2">
+
+        <GridView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:columnWidth="80dp"
+            android:numColumns="3"
+            android:verticalSpacing="5dp"
+            android:horizontalSpacing="5dp"
+            android:stretchMode="columnWidth"
+            android:drawSelectorOnTop="true"
+            android:id="@+id/tableGridView" />
+    </ScrollView>
+
+    <Button
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:text="Check Bill"
+        android:id="@+id/conbtn"
+        android:layout_gravity="center_horizontal|bottom"
+        android:background="@drawable/pinkie_btn_default_holo_light"
+        android:textColor="#fff"
+        android:drawSelectorOnTop="true"
+        android:layout_marginBottom="30dp" />
+</LinearLayout>

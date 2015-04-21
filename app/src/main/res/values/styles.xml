@@ -11,6 +11,7 @@
         <item name="android:popupMenuStyle">@style/PopupMenu</item>
         <item name="android:seekBarStyle">@style/SeekBarpinkie</item>
         <item name="android:buttonStyle">@style/Buttonpinkie</item>
+        <item name="android:editTextBackground">@drawable/pinkie_edit_text_holo_light</item>
     </style>
 
     <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
