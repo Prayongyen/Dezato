@@ -31,7 +31,7 @@ import java.util.ArrayList;
  * Created by prayong on 19/4/2558.
  */
 public class BiiFragment extends Fragment implements AdapterView.OnItemClickListener {
-    ArrayList<BillItem> mItems = new ArrayList<BillItem>();
+    ArrayList<BillItem> mItems;
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -63,6 +63,7 @@ public class BiiFragment extends Fragment implements AdapterView.OnItemClickList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mItems = new ArrayList<BillItem>();
         new billbytable().execute();
         View rootView = inflater.inflate(R.layout.fragment_table_order, container, false);
         GridView gridView = (GridView) rootView.findViewById(R.id.tableGridView);
