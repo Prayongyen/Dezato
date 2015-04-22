@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,8 +17,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class CheckBillActivity extends Activity {
@@ -112,15 +115,34 @@ public class CheckBillActivity extends Activity {
             }
             else
             {
+                TextView textView0 = (TextView) findViewById(R.id.textView0);
+                textView0.setVisibility(View.GONE);
+                TextView textView1 = (TextView) findViewById(R.id.textView1);
+                textView1.setVisibility(View.GONE);
+                TextView textView2 = (TextView) findViewById(R.id.textView2);
+                textView2.setVisibility(View.GONE);
+
+
+
                 CheckBillAdapter adapter = new CheckBillAdapter(getApplicationContext(), mItems);
                 ListView listView = (ListView)findViewById(R.id.listViewOrder);
                 listView.setAdapter(adapter);
-                Log.d("TEST",sum);
+
                 TextView textView = (TextView)findViewById(R.id.textViewSumAll);
-                textView.setText(sum);
+                Locale locale = new Locale("th", "TH");
+                NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
+                textView.setText(fmt.format(Integer.parseInt(sum)));
             }
 
             super.onPostExecute(jsonobject);
+        }
+    }
+    public String formatDecimal(float number) {
+        float epsilon = 0.004f; // 4 tenths of a cent
+        if (Math.abs(Math.round(number) - number) < epsilon) {
+            return String.format("%10.0f", number); // sdb
+        } else {
+            return String.format("%10.2f", number); // dj_segfault
         }
     }
 }
