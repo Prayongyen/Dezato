@@ -40,6 +40,8 @@ public class DialogFragmentwWithListFragment extends DialogFragment {
         SharedPreferences sp = getActivity().getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
         String order_no = sp.getString("order_no", "");
         String txtTableNo = sp.getString("txtTableNo","");
+        getDialog().setCanceledOnTouchOutside(true);
+        getDialog().setCancelable(true);
         getDialog().setTitle("Table "+txtTableNo +" Bill "+order_no);
         return rootView;
     }

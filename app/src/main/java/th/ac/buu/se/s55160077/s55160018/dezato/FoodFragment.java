@@ -70,9 +70,9 @@ public class FoodFragment  extends ListFragment {
                 if( keyCode == KeyEvent.KEYCODE_BACK ) {
                     Log.d("TEST", "onKey Back listener is working1!!!");
                     //getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    return false;
+                    return true;
                 } else {
-                    return false;
+                    return true;
                 }
             }
         });
