@@ -1,5 +1,6 @@
 package th.ac.buu.se.s55160077.s55160018.dezato;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,11 +22,17 @@ import java.util.List;
 
 public class CheckBillActivity extends Activity {
     private List<FoodOrderItem> mItems = new ArrayList<FoodOrderItem>();
+    private String sum = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_bill);
+        SharedPreferences sp = getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
+        String txtTableNo = sp.getString("txtTableNo","");
+
+        TextView textView = (TextView)findViewById(R.id.textViewTableName);
+        textView.setText("Table "+txtTableNo);
         new BillDataJson().execute("");
     }
 
@@ -33,6 +41,12 @@ public class CheckBillActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_check_bill, menu);
+
+        SharedPreferences sp = getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
+        String txtTableNo = sp.getString("txtTableNo","");
+        ActionBar ab = getActionBar();
+        ab.setTitle("Check Bill Table "+txtTableNo);
+
         return true;
     }
 
@@ -71,9 +85,9 @@ public class CheckBillActivity extends Activity {
 
         @Override
         protected void onPostExecute(JSONObject jsonobject) {
-
             try {
                 JSONArray jsonarray;
+                sum = jsonobject.getString("summary");
                 jsonarray = jsonobject.getJSONArray("bill");
                 int lengthObj = jsonarray.length();
 
@@ -101,6 +115,9 @@ public class CheckBillActivity extends Activity {
                 CheckBillAdapter adapter = new CheckBillAdapter(getApplicationContext(), mItems);
                 ListView listView = (ListView)findViewById(R.id.listViewOrder);
                 listView.setAdapter(adapter);
+                Log.d("TEST",sum);
+                TextView textView = (TextView)findViewById(R.id.textViewSumAll);
+                textView.setText(sum);
             }
 
             super.onPostExecute(jsonobject);
