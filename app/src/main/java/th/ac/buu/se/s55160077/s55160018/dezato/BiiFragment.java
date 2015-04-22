@@ -18,8 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,6 +68,13 @@ public class BiiFragment extends Fragment implements AdapterView.OnItemClickList
         mItems = new ArrayList<BillItem>();
         new billbytable().execute();
         View rootView = inflater.inflate(R.layout.fragment_table_order, container, false);
+        Button btncon = (Button) rootView.findViewById(R.id.conbtn);
+        btncon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "คลิกและนะ", Toast.LENGTH_SHORT).show();
+            }
+        });
         GridView gridView = (GridView) rootView.findViewById(R.id.tableGridView);
         gridView.setOnItemClickListener(this);
 
