@@ -7,7 +7,9 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +20,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -50,28 +56,18 @@ public class BiiFragment extends Fragment implements AdapterView.OnItemClickList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        new billbytable().execute();
         View rootView = inflater.inflate(R.layout.fragment_table_order, container, false);
-
-
-        BillItem billItem = new BillItem();
-        billItem.setOrder_no("1");
-        billItem.setTable_id("3");
-        mItems.add(billItem);
-        // initialize the adapter
-        BillItemAdapter  billItemAdapter = new BillItemAdapter(getActivity(), mItems);
-
-        // initialize the GridView
         GridView gridView = (GridView) rootView.findViewById(R.id.tableGridView);
-
-
-        gridView.setAdapter(billItemAdapter);
         gridView.setOnItemClickListener(this);
+
         return rootView;
     }
     @Override
@@ -91,9 +87,6 @@ public class BiiFragment extends Fragment implements AdapterView.OnItemClickList
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         SharedPreferences sp = getActivity().getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("order_no", "1");
-        editor.commit();
         String txtTableNo = sp.getString("txtTableNo","");
         ActionBar ab = getActivity().getActionBar();
         ab.setTitle("Bill Table "+txtTableNo);
@@ -102,16 +95,72 @@ public class BiiFragment extends Fragment implements AdapterView.OnItemClickList
         super.onCreateOptionsMenu(menu, inflater);
         NavigationDrawerFragment mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mNavigationDrawerFragment.setMenuVisibility(true);
+        mNavigationDrawerFragment.setMenuVisibility(false);
     }
 
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         BillItem item = mItems.get(position);
+        SharedPreferences sp = getActivity().getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("bill_no",item.getOrder_no() );
+        editor.commit();
+
         DialogFragmentwWithListFragment dialogFragment = DialogFragmentwWithListFragment.newInstance();
         dialogFragment.setRetainInstance(true);
         dialogFragment.show(getFragmentManager(), "DialogFragmentwWithListFragment");
-
     }
+    private class billbytable extends AsyncTask<String, Integer, JSONObject> {
+        @Override
+        protected JSONObject doInBackground(String... params) {
+            SharedPreferences sp = getActivity().getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
+            String txtTableNo = sp.getString("txtTableNo","");
+            String order_no = sp.getString("order_no","");
+            SharedPreferences sf = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
+            String ip = sf.getString("IP","");
+            String url = "http://"+ip+"/rest_server/index.php/api/c_dz_order/billbytable/format/json";
+
+            RestService re = new RestService();
+            JSONObject jsonobject =  re.getOrderbyTableBill(url,txtTableNo,order_no);
+
+            return jsonobject;
+        }
+
+
+        @Override
+        protected void onPostExecute(JSONObject jsonobject) {
+            SharedPreferences sp = getActivity().getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            String txtTableNo = sp.getString("txtTableNo","");
+
+            try {
+                editor.putString("order_no", jsonobject.getString("bill"));
+                int length = Integer.parseInt(jsonobject.getString("bill"));
+                for(int i = 1 ;i<length;i++)
+                {
+                    BillItem billItem = new BillItem();
+                    billItem.setOrder_no(String.valueOf(i));
+                    billItem.setTable_id(txtTableNo);
+                    mItems.add(billItem);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            editor.commit();
+
+            // initialize the adapter
+            BillItemAdapter  billItemAdapter = new BillItemAdapter(getActivity(), mItems);
+
+            // initialize the GridView
+            GridView gridView = (GridView) getActivity().findViewById(R.id.tableGridView);
+            gridView.setAdapter(billItemAdapter);
+
+
+            super.onPostExecute(jsonobject);
+        }
+    }
+
+
 }
