@@ -138,7 +138,7 @@ public class FoodListAdapter extends BaseAdapter {
                     public void onClick(View view) {
                         if(foodQty == 0)
                         {
-                            Toast.makeText(mContext,"เพิ่มรายการไม่สำเร็จ" , Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext,"Order Can't Be Zero" , Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
@@ -200,9 +200,9 @@ public class FoodListAdapter extends BaseAdapter {
         protected void onPostExecute(JSONObject jsonobject) {
             try {
                 if(jsonobject.getString("message").equals("OK"))
-                    Toast.makeText(mContext,"เพิ่มรายการสำเร็จ" , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext,"Add Order Success" , Toast.LENGTH_SHORT).show();
                 else
-                    Toast.makeText(mContext,"เพิ่มรายการไม่สำเร็จ" , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext,"Add Order Fail" , Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
                 e.printStackTrace();
             }

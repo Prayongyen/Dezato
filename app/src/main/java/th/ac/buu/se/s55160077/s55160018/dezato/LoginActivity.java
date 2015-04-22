@@ -134,7 +134,7 @@ public class LoginActivity extends Activity {
                     editor.putBoolean("LOGIN", true);
                     editor.commit();
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "Login OK", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT);
                     toast.show();
 
                     Intent mainIntent = new Intent(getApplicationContext(),MainNavigation.class);

@@ -69,8 +69,8 @@ public class BillItemAdapter extends BaseAdapter {
      * @see //developer.android.com/training/improving-layouts/smooth-scrolling.html#ViewHolder
      */
     private static class ViewHolder {
-        ImageView imageView;
-        TextView table_id;
+//        ImageView imageView;
+//        TextView table_id;
         TextView order_no;
     }
 }
