@@ -11,6 +11,15 @@ public class FoodOrderItem {
     private String food_qty;
     private String order_no;
     private String food_path;
+    private String food_price;
+
+    public String getFood_price() {
+        return food_price;
+    }
+
+    public void setFood_price(String food_price) {
+        this.food_price = food_price;
+    }
 
     public String getTable_id() {
         return table_id;

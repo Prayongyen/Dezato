@@ -6,17 +6,13 @@ import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -198,7 +194,7 @@ public class ReserveInfoFragment extends Fragment {
                     //CALL ORDER
                     setTableShared(s.getString("txtTableNo"));
                     fragmentManager.beginTransaction()
-                            .replace(R.id.container, BiiFragment.newInstance(1))
+                            .replace(R.id.container, BillFragment.newInstance(1))
                             .addToBackStack("tag")
                             .commit();
                 }

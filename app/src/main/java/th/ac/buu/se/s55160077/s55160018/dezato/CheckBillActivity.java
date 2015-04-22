@@ -1,33 +1,31 @@
 package th.ac.buu.se.s55160077.s55160018.dezato;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class CheckBillActivity extends Activity {
+    private List<FoodOrderItem> mItems = new ArrayList<FoodOrderItem>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_bill);
-
-        String[] foodName = {
-                "American Set","Bali Set","Cheese Stick","Maccaroni","American Set","Bali Set","Cheese Stick","Maccaroni","American Set","Bali Set","Cheese Stick","Maccaroni"
-        };
-        String[] QTY = {
-                "1","2","50","5","1","2","50","5","1","2","50","5"
-        };
-        String[] price = {
-                "200","123","1412","13","200","123","1412","13","200","123","1412","13"
-        };
-
-        CheckBillAdapter adapter = new CheckBillAdapter(getApplicationContext(), foodName, QTY, price);
-
-        ListView listView = (ListView)findViewById(R.id.listViewOrder);
-        listView.setAdapter(adapter);
+        new BillDataJson().execute("");
     }
 
 
@@ -51,5 +49,61 @@ public class CheckBillActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private class BillDataJson extends AsyncTask<String, Integer, JSONObject> {
+        @Override
+        protected JSONObject doInBackground(String... params) {
+
+            SharedPreferences sp = getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
+            String ip = sp.getString("IP","");
+
+            SharedPreferences spTable = getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
+            String tableNo = spTable.getString("txtTableNo","");
+
+            String url = "http://"+ip+"/rest_server/index.php/api/c_dz_bill/billData/id/"+tableNo+"/format/json";
+
+            RestService re = new RestService();
+            JSONObject jsonobject =  re.doGet(url);
+
+            return jsonobject;
+        }
+
+
+        @Override
+        protected void onPostExecute(JSONObject jsonobject) {
+
+            try {
+                JSONArray jsonarray;
+                jsonarray = jsonobject.getJSONArray("bill");
+                int lengthObj = jsonarray.length();
+
+                for (int i = 0; i < lengthObj; i++) {
+                    jsonobject = jsonarray.getJSONObject(i);
+                    String foodname = jsonobject.getString("food_name");
+                    String price = jsonobject.getString("bill_sum");
+                    String qty = jsonobject.getString("QTY");
+                    FoodOrderItem food = new FoodOrderItem();
+                    food.setFood_name(foodname);
+                    food.setFood_qty(qty);
+                    food.setFood_price(price);
+                    mItems.add(food);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            if(mItems.size() == 0){
+
+            }
+            else
+            {
+                CheckBillAdapter adapter = new CheckBillAdapter(getApplicationContext(), mItems);
+                ListView listView = (ListView)findViewById(R.id.listViewOrder);
+                listView.setAdapter(adapter);
+            }
+
+            super.onPostExecute(jsonobject);
+        }
     }
 }

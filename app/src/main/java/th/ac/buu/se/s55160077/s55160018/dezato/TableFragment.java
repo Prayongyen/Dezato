@@ -4,14 +4,12 @@ package th.ac.buu.se.s55160077.s55160018.dezato;
  * Created by prayong on 17/4/2558.
  */
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -24,9 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
@@ -39,7 +35,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -164,7 +159,7 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
             setTableShared(item.getTxtTableNo());
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, BiiFragment.newInstance(1))
+                    .replace(R.id.container, BillFragment.newInstance(1))
                     .addToBackStack("tag")
                     .commit();
         }
@@ -225,7 +220,7 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
                         setTableShared(item.getTxtTableNo());
                         FragmentManager fragmentManager = getFragmentManager();
                         fragmentManager.beginTransaction()
-                                .replace(R.id.container, BiiFragment.newInstance(1))
+                                .replace(R.id.container, BillFragment.newInstance(1))
                                 .addToBackStack("tag")
                                 .commit();
                     }
@@ -360,7 +355,7 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
                     //CALL ORDER
                     setTableShared(s.getString("txtTableNo"));
                     fragmentManager.beginTransaction()
-                            .replace(R.id.container, BiiFragment.newInstance(1))
+                            .replace(R.id.container, BillFragment.newInstance(1))
                             .addToBackStack("tag")
                             .commit();
                 }

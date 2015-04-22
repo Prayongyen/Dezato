@@ -1,15 +1,13 @@
 package th.ac.buu.se.s55160077.s55160018.dezato;
 
 import android.app.ActionBar;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,13 +15,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,7 +27,7 @@ import java.util.ArrayList;
 /**
  * Created by prayong on 19/4/2558.
  */
-public class BiiFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class BillFragment extends Fragment implements AdapterView.OnItemClickListener {
     ArrayList<BillItem> mItems;
     /**
      * The fragment argument representing the section number for this
@@ -44,15 +39,15 @@ public class BiiFragment extends Fragment implements AdapterView.OnItemClickList
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static BiiFragment newInstance(int sectionNumber) {
-        BiiFragment fragment = new BiiFragment();
+    public static BillFragment newInstance(int sectionNumber) {
+        BillFragment fragment = new BillFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public BiiFragment() {
+    public BillFragment() {
     }
 
     @Override
@@ -72,6 +67,8 @@ public class BiiFragment extends Fragment implements AdapterView.OnItemClickList
         btncon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent mainIntent = new Intent(getActivity(),CheckBillActivity.class);
+                startActivity(mainIntent);
                 Toast.makeText(getActivity(), "คลิกและนะ", Toast.LENGTH_SHORT).show();
             }
         });
