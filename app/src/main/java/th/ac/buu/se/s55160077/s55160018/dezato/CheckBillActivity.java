@@ -2,7 +2,9 @@ package th.ac.buu.se.s55160077.s55160018.dezato;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -143,6 +146,81 @@ public class CheckBillActivity extends Activity {
             return String.format("%10.0f", number); // sdb
         } else {
             return String.format("%10.2f", number); // dj_segfault
+        }
+    }
+
+    private class chkBillJson extends AsyncTask<String, Integer, JSONObject> {
+        @Override
+        protected JSONObject doInBackground(String... params) {
+
+            SharedPreferences sp = getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
+            String ip = sp.getString("IP","");
+            String Username = sp.getString("USERNAME", "");
+
+            SharedPreferences spTable = getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
+            String tableNo = spTable.getString("txtTableNo","");
+
+            String url = "http://"+ip+"/rest_server/index.php/api/c_dz_bill/updateBill/";
+
+            Log.d("TEST",tableNo);
+            RestService re = new RestService();
+            JSONObject resultJson = re.putCheckBill(url, tableNo, Username);
+
+            return resultJson;
+        }
+
+
+        @Override
+        protected void onPostExecute(JSONObject resultJson) {
+            try {
+                if (resultJson.getString("message").equals("OK")){
+                    Toast toast = Toast.makeText(getApplicationContext(), "Checkbill OK", Toast.LENGTH_SHORT);
+                    toast.show();
+
+                    Intent mainIntent = new Intent(getApplicationContext(),MainNavigation.class);
+                    startActivity(mainIntent);
+                    finish();
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Checkbill FAIL", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            super.onPostExecute(resultJson);
+        }
+    }
+
+    public void onChkBillClick(View view){
+
+        SharedPreferences spTable = getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
+        String tableNo = spTable.getString("txtTableNo","");
+
+        TableItem tableItem = new TableItem();
+        tableItem.setTxtTableNo(tableNo);
+        tableItem.setTxtTableStatus("F");
+        new TableUpdateFree().execute(tableItem);
+
+        new chkBillJson().execute("");
+    }
+
+    private class TableUpdateFree extends AsyncTask<TableItem, Integer, JSONObject> {
+
+
+        @Override
+        protected JSONObject doInBackground(TableItem... tableItems) {
+            SharedPreferences sp = getApplicationContext().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
+            String ip = sp.getString("IP","");
+            String url = "http://"+ip+getString(R.string.update_table);
+            RestService re = new RestService();
+            JSONObject resultJson = re.putTableEating(url,tableItems[0]);
+            return resultJson;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject s) {
+
+            super.onPostExecute(s);
         }
     }
 }

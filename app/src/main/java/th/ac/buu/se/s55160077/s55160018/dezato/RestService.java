@@ -408,7 +408,7 @@ public class RestService {
         return jsonResult;
     }
 
-    public JSONObject putCheckBill(String url,String table)
+    public JSONObject putCheckBill(String url,String table, String User)
     {
         InputStream inputStream = null;
         JSONObject jsonObj = null;
@@ -428,6 +428,7 @@ public class RestService {
             JSONObject jsonObject = new JSONObject();
 
             jsonObject.put("table_no",table);
+            jsonObject.put("user_name",User);
             //      jsonObject.put("guarderiasIdGuarderias",jsonObject2);
             json = jsonObject.toString();
             StringEntity se = new StringEntity(json);
