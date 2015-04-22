@@ -51,6 +51,7 @@ public class FoodOrderListFragment  extends ListFragment {
 
     }
 
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -119,6 +120,7 @@ public class FoodOrderListFragment  extends ListFragment {
                     String food_qty = jsonobject.getString("order_qty");
                     String order_no = jsonobject.getString("order_no");
                     String food_path = jsonobject.getString("food_path");
+                    String order_id = jsonobject.getString("order_id");
 
                     FoodOrderItem food = new FoodOrderItem();
                     food.setFood_id(food_id);
@@ -128,6 +130,7 @@ public class FoodOrderListFragment  extends ListFragment {
                     food.setTable_id(table_id);
                     food.setOrder_no(order_no);
                     food.setFood_qty(food_qty);
+                    food.setOrder_id(order_id);
                     mItems.add(food);
                 }
 

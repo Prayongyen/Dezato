@@ -4,6 +4,7 @@ package th.ac.buu.se.s55160077.s55160018.dezato;
  * Created by prayong on 21/4/2558.
  */
 public class FoodOrderItem {
+    private String order_id;
     private String table_id;
     private String food_id;
     private String food_name;
@@ -13,6 +14,13 @@ public class FoodOrderItem {
     private String food_path;
     private String food_price;
 
+    public String getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(String order_id) {
+        this.order_id = order_id;
+    }
     public String getFood_price() {
         return food_price;
     }

@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -19,6 +20,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Locale;
 
@@ -72,7 +77,9 @@ public class OrderFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.btnAccept : {
                 getFragmentManager().popBackStack();
+
                 Toast.makeText(getActivity(), "สร้างรายการสำเร็จ", Toast.LENGTH_SHORT).show();
+                new addBill().execute();
                 return true;
             }
         }
@@ -150,6 +157,24 @@ public class OrderFragment extends Fragment {
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             super.destroyItem(container, position, object);
+        }
+    }
+
+    private class addBill extends AsyncTask<String, Integer, Void> {
+        @Override
+        protected Void doInBackground(String... params) {
+
+            SharedPreferences sp = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
+            String ip = sp.getString("IP","");
+            String name = sp.getString("USERNAME","");
+            SharedPreferences sd = getActivity().getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
+            String txtTableNo = sd.getString("txtTableNo","");
+            String order_no = sd.getString("order_no","");
+            String url = "http://"+ip+"/rest_server/index.php/api/c_dz_order/updatebill/table_id/"+txtTableNo+"/order_no/"+order_no+"/format/json";
+
+            RestService re = new RestService();
+            re.doGet(url);
+            return null;
         }
     }
 }
