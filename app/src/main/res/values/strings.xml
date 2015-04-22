@@ -28,4 +28,5 @@
         <item>NO LIST ITEM</item>
     </string-array>
     <string name="title_activity_image">ImageActivity</string>
+    <string name="title_activity_check_bill">Table XXX Check Bill</string>
 </resources>

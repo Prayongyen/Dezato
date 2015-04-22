@@ -15,8 +15,9 @@
         android:label="@string/app_name"
         android:theme="@style/pinkie" >
         <activity
-            android:name=".LogoActivity"
-            android:label="@string/title_activity_logo" >
+
+            android:name=".CheckBillActivity"
+            android:label="@string/title_activity_check_bill">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,6 +40,10 @@
             android:name=".ImageActivity"
             android:label="@string/title_activity_image" >
         </activity>
+        <!--<activity-->
+            <!--android:name=".CheckBillActivity"-->
+            <!--android:label="@string/title_activity_check_bill" >-->
+        <!--</activity>-->
     </application>
 
 </manifest>

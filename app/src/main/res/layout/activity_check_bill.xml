@@ -1,0 +1,147 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="th.ac.buu.se.s55160077.s55160018.dezato.CheckBillActivity">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/loginbg">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Table 5"
+                android:id="@+id/textViewTableName"
+                android:layout_gravity="top|center"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:textSize="50dp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/loginbg"
+            android:layout_marginTop="350dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="697"
+                android:id="@+id/textViewSumAll"
+                android:layout_gravity="right|center"
+                android:textStyle="bold"
+                android:layout_marginRight="70dp"
+                android:textSize="40dp" />
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/imageView11"
+                android:layout_gravity="right|center"
+                android:background="@drawable/ic_total"
+                android:layout_marginRight="15dp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="You"
+                android:id="@+id/textView1"
+                android:layout_gravity="top|center"
+                android:textStyle="bold"
+                android:layout_marginTop="110dp"
+                android:textSize="50dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Don't Have Any"
+                android:id="@+id/textView2"
+                android:layout_gravity="top|center"
+                android:textStyle="bold"
+                android:layout_marginTop="170dp"
+                android:textSize="50dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Order"
+                android:id="@+id/textView0"
+                android:layout_gravity="top|center"
+                android:textStyle="bold"
+                android:layout_marginTop="220dp"
+                android:textSize="50dp" />
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="267dp"
+                android:id="@+id/listViewOrder"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="25dp" />
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:id="@+id/imageView6"
+                android:layout_gravity="left|top"
+                android:background="@drawable/label"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Menu"
+                android:id="@+id/textView3"
+                android:layout_gravity="left|top"
+                android:textColor="#ffffffff"
+                android:textStyle="bold"
+                android:layout_marginTop="65dp"
+                android:layout_marginLeft="20dp" />
+
+            <ImageView
+                android:layout_width="77dp"
+                android:layout_height="40dp"
+                android:id="@+id/imageView7"
+                android:layout_gravity="left|top"
+                android:background="@drawable/label"
+                android:layout_marginTop="335dp"
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Total"
+                android:id="@+id/textView4"
+                android:layout_gravity="left|top"
+                android:textColor="#ffffffff"
+                android:textStyle="bold"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="340dp" />
+
+        </FrameLayout>
+        <Button
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:text="Check Bill"
+            android:id="@+id/chkbillbtn"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="@drawable/pinkie_btn_default_holo_light"
+            android:textColor="#fff"
+            android:drawSelectorOnTop="true"
+            android:layout_marginBottom="9dp" />
+    </FrameLayout>
+</RelativeLayout>
