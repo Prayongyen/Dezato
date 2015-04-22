@@ -95,7 +95,7 @@ public class BiiFragment extends Fragment implements AdapterView.OnItemClickList
         super.onCreateOptionsMenu(menu, inflater);
         NavigationDrawerFragment mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mNavigationDrawerFragment.setMenuVisibility(false);
+        mNavigationDrawerFragment.setMenuVisibility(true);
     }
 
 
