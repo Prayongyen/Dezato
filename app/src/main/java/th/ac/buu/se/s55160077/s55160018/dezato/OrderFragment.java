@@ -171,7 +171,7 @@ public class OrderFragment extends Fragment {
             String txtTableNo = sd.getString("txtTableNo","");
             String order_no = sd.getString("order_no","");
             String url = "http://"+ip+"/rest_server/index.php/api/c_dz_order/updatebill/table_id/"+txtTableNo+"/order_no/"+order_no+"/format/json";
-
+Log.d("HELLO",url);
             RestService re = new RestService();
             re.doGet(url);
             return null;

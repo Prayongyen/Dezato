@@ -69,7 +69,7 @@ public class BillFragment extends Fragment implements AdapterView.OnItemClickLis
             public void onClick(View view) {
                 Intent mainIntent = new Intent(getActivity(),CheckBillActivity.class);
                 startActivity(mainIntent);
-//                Toast.makeText(getActivity(), "คลิกและนะ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "คลิกและนะ", Toast.LENGTH_SHORT).show();
             }
         });
         GridView gridView = (GridView) rootView.findViewById(R.id.tableGridView);

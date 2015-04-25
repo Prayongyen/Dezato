@@ -38,7 +38,7 @@ public class DialogFragmentwWithListFragment extends DialogFragment {
         View rootView = inflater.inflate(R.layout.dialog_fragment_with_list_fragment, container);
 
         SharedPreferences sp = getActivity().getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
-        String order_no = sp.getString("order_no", "");
+        String order_no = sp.getString("bill_no", "");
         String txtTableNo = sp.getString("txtTableNo","");
         getDialog().setCanceledOnTouchOutside(true);
         getDialog().setCancelable(true);
