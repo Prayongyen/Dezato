@@ -69,7 +69,7 @@ public class BillFragment extends Fragment implements AdapterView.OnItemClickLis
             public void onClick(View view) {
                 Intent mainIntent = new Intent(getActivity(),CheckBillActivity.class);
                 startActivity(mainIntent);
-                Toast.makeText(getActivity(), "คลิกและนะ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "เช็คบิล", Toast.LENGTH_SHORT).show();
             }
         });
         GridView gridView = (GridView) rootView.findViewById(R.id.tableGridView);
@@ -126,7 +126,7 @@ public class BillFragment extends Fragment implements AdapterView.OnItemClickLis
             String order_no = sp.getString("order_no","");
             SharedPreferences sf = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
             String ip = sf.getString("IP","");
-            String url = "http://"+ip+"/rest_server/index.php/api/c_dz_order/billbytable/format/json";
+            String url = "http://"+ip+"/dezatoshop/rest/index.php/api/c_dz_order/billbytable/format/json";
 
             RestService re = new RestService();
             JSONObject jsonobject =  re.getOrderbyTableBill(url,txtTableNo,order_no);

@@ -88,7 +88,7 @@ public class DrinkFragment  extends ListFragment {
 
             SharedPreferences sp = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
             String ip = sp.getString("IP","");
-            String url = "http://"+ip+"/rest_server/index.php/api/c_dz_food/foodType/id/"+status+"/format/json";
+            String url = "http://"+ip+"/dezatoshop/rest/index.php/api/c_dz_food/foodType/id/"+status+"/format/json";
 
             RestService re = new RestService();
             JSONObject jsonobject =  re.doGet(url);

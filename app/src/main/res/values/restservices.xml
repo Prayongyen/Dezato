@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="update_table">/rest_server/index.php/api/c_dz_table/table</string>
-    <string name="show_table">/rest_server/index.php/api/c_dz_table/tables/format/json</string>
+    <string name="update_table">/dezatoshop/rest/index.php/api/c_dz_table/table</string>
+    <string name="show_table">/dezatoshop/rest/index.php/api/c_dz_table/tables/format/json</string>
 </resources>

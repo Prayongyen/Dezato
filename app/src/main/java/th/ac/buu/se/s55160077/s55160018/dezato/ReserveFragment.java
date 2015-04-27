@@ -155,7 +155,7 @@ public class ReserveFragment extends Fragment{
             item[0].setTxtTableNo(txtTableNo);
             sp = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
             String ip = sp.getString("IP", "");
-            String url = "http://" + ip + "/rest_server/index.php/api/c_dz_table/tablereserve/id/" + txtTableNo + "/format/json";
+            String url = "http://" + ip + "/dezatoshop/rest/index.php/api/c_dz_table/tablereserve/id/" + txtTableNo + "/format/json";
             RestService re = new RestService();
             JSONObject jsonobject = re.putTableReserve(url,item[0]);
             return jsonobject;

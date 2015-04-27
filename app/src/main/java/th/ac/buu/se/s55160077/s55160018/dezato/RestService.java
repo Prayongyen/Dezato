@@ -180,7 +180,7 @@ public class RestService {
             // 2. make POST request to the given URL
 
             HttpPost httpPut = new
-                    HttpPost("http://10.20.64.83/rest_server/index.php/api/c_dz_order/order");
+                    HttpPost("http://10.20.64.83/dezatoshop/rest/index.php/api/c_dz_order/order");
             String json = "";
             //              // 3. build jsonObject
             //              JSONObject jsonObject2 = new JSONObject();

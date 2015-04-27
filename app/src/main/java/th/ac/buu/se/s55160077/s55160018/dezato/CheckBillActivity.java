@@ -80,7 +80,7 @@ public class CheckBillActivity extends Activity {
             SharedPreferences spTable = getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
             String tableNo = spTable.getString("txtTableNo","");
 
-            String url = "http://"+ip+"/rest_server/index.php/api/c_dz_bill/billData/id/"+tableNo+"/format/json";
+            String url = "http://"+ip+"/dezatoshop/rest/index.php/api/c_dz_bill/billData/id/"+tableNo+"/format/json";
 
             RestService re = new RestService();
             JSONObject jsonobject =  re.doGet(url);
@@ -160,7 +160,7 @@ public class CheckBillActivity extends Activity {
             SharedPreferences spTable = getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
             String tableNo = spTable.getString("txtTableNo","");
 
-            String url = "http://"+ip+"/rest_server/index.php/api/c_dz_bill/updateBill/";
+            String url = "http://"+ip+"/dezatoshop/rest/index.php/api/c_dz_bill/updateBill/";
 
             Log.d("TEST",tableNo);
             RestService re = new RestService();

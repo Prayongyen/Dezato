@@ -81,7 +81,7 @@ public class IncomeFragment extends ListFragment implements AdapterView.OnItemCl
             SharedPreferences sp = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
             String ip = sp.getString("IP","");
             String name = sp.getString("USERNAME","");
-            String url = "http://"+ip+"/rest_server/index.php/api/c_dz_user_reward/rewardlist/id/"+name+"/format/json";
+            String url = "http://"+ip+"/dezatoshop/rest/index.php/api/c_dz_user_reward/rewardlist/id/"+name+"/format/json";
 
             RestService re = new RestService();
             JSONObject jsonobject =  re.doGet(url);

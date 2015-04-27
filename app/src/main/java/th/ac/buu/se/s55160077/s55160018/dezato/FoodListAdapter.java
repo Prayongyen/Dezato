@@ -83,13 +83,13 @@ public class FoodListAdapter extends BaseAdapter {
         viewHolder.food_name.setText(item.getFood_name());
         viewHolder.food_price.setText(item.getFood_price());
         ImageView food_path = (ImageView) convertView.findViewById(R.id.food_path);
-        imageLoader.DisplayImage("http://"+ip+"/foodimage/"+item.getFood_path(), food_path);
+        imageLoader.DisplayImage("http://"+ip+"/dezatoshop/foodimage/"+item.getFood_path(), food_path);
         food_path.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences sp = mContext.getSharedPreferences("IMG", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sp.edit();
-                editor.putString("PATH", "http://"+ip+"/foodimagebig/"+item.getFood_path());
+                editor.putString("PATH", "http://"+ip+"/dezatoshop/foodimage/"+item.getFood_path());
                 editor.commit();
 
                 final Intent mainIntent = new Intent(mContext, ImageActivity.class);
@@ -116,7 +116,7 @@ public class FoodListAdapter extends BaseAdapter {
                 dialog.show();
                 final SeekBar seekbar = (SeekBar) dialog.findViewById(R.id.size_seekbar);
                 final ImageView foodImg = (ImageView) dialog.findViewById(R.id.foodImg);
-                imageLoader.DisplayImage("http://"+ip+"/foodimage/"+item.getFood_path(), foodImg);
+                imageLoader.DisplayImage("http://"+ip+"/dezatoshop/foodimage/"+item.getFood_path(), foodImg);
                 final TextView count = (TextView) dialog.findViewById(R.id.count);
                 final ImageButton imageButtonLeft = (ImageButton) dialog.findViewById(R.id.imageButtonLeft);
                 imageButtonLeft.setOnClickListener(new View.OnClickListener() {
@@ -188,7 +188,7 @@ public class FoodListAdapter extends BaseAdapter {
 
             SharedPreferences sp = mContext.getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
             String ip = sp.getString("IP","");
-            String url = "http://"+ip+"/rest_server/index.php/api/c_dz_order/order/format/json";
+            String url = "http://"+ip+"/dezatoshop/rest/index.php/api/c_dz_order/order/format/json";
             RestService re = new RestService();
             JSONObject jsonobject =  re.AddFoodOrder(url,params[0]);
 

@@ -114,7 +114,7 @@ public class LoginActivity extends Activity {
         protected JSONObject doInBackground(String... params) {
             SharedPreferences sp = getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
             String ip = sp.getString("IP", "");
-            String url = "http://" + ip + "/rest_server/index.php/api/c_dz_user/checklogin/";
+            String url = "http://" + ip + "/dezatoshop/rest/index.php/api/c_dz_user/checklogin/";
             RestService re = new RestService();
 
             String Username = sp.getString("USERNAME", "");

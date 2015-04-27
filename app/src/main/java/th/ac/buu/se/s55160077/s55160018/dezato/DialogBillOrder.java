@@ -76,7 +76,7 @@ public class DialogBillOrder  extends ListFragment {
             String bill_no = sp.getString("bill_no","");
             SharedPreferences sf = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
             String ip = sf.getString("IP","");
-            String url = "http://"+ip+"/rest_server/index.php/api/c_dz_order/ordertablebybillno/format/json";
+            String url = "http://"+ip+"/dezatoshop/rest/index.php/api/c_dz_order/ordertablebybillnodesc/format/json";
 
             RestService re = new RestService();
             JSONObject jsonobject =  re.getOrderbyTableBill(url,txtTableNo,bill_no);

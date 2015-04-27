@@ -71,7 +71,7 @@ public class DialogBillOrderAdapter extends BaseAdapter {
         viewHolder.food_name.setText(item.getFood_name());
         viewHolder.food_qty.setText(item.getFood_qty());
         ImageView food_path = (ImageView) convertView.findViewById(R.id.food_path);
-        imageLoader.DisplayImage("http://" + ip + "/foodimage/" + item.getFood_path(), food_path);
+        imageLoader.DisplayImage("http://" + ip + "/dezatoshop/foodimage/" + item.getFood_path(), food_path);
         return convertView;
     }
 
