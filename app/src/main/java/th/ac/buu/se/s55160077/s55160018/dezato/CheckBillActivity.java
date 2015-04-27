@@ -199,9 +199,8 @@ public class CheckBillActivity extends Activity {
         TableItem tableItem = new TableItem();
         tableItem.setTxtTableNo(tableNo);
         tableItem.setTxtTableStatus("F");
-        new TableUpdateFree().execute(tableItem);
-
         new chkBillJson().execute("");
+        new TableUpdateFree().execute(tableItem);
     }
 
     private class TableUpdateFree extends AsyncTask<TableItem, Integer, JSONObject> {
