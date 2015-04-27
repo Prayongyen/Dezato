@@ -3,7 +3,12 @@
     <item
         android:id="@+id/orderbill"
         android:showAsAction="ifRoom|withText"
-        android:title="Order &amp; Check Bill"
+        android:title="Add Order"
+        android:visible="true"/>
+    <item
+        android:id="@+id/chkbill"
+        android:showAsAction="ifRoom|withText"
+        android:title="Check Bill"
         android:visible="true"/>
     <item
         android:id="@+id/ceating"

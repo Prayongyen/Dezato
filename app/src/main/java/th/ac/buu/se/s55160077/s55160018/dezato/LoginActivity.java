@@ -51,10 +51,10 @@ public class LoginActivity extends Activity {
         InternetChecking internetChecking = new InternetChecking(getApplicationContext());
         if(internetChecking.isInternetConnected())
         {
+
             if (sp.getBoolean("LOGIN",false) == true){
-                Intent mainIntent = new Intent(getApplicationContext(),MainNavigation.class);
-                startActivity(mainIntent);
-                finish();
+                new Checklogin().execute();
+
             }
         }
         else
@@ -63,6 +63,9 @@ public class LoginActivity extends Activity {
         }
 
     }
+
+
+
 
 
     @Override
@@ -99,8 +102,51 @@ public class LoginActivity extends Activity {
         editor.putString("USERNAME", Username.getText().toString());
         editor.commit();
         new UserJson().execute("");
+    }
 
+    private class Checklogin extends AsyncTask<String, Integer, JSONObject> {
 
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... params) {
+            SharedPreferences sp = getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
+            String ip = sp.getString("IP", "");
+            String token = sp.getString("TOKEN", "");
+            String url = "http://" + ip + "/dezatoshop/rest/index.php/api/c_dz_user/checkloggedin/";
+            RestService re = new RestService();
+            String Username = sp.getString("USERNAME", "");
+            JSONObject resultJson = re.putLogin(url, Username, token);
+            return resultJson;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject resultJson) {
+            try {
+                if (resultJson.getString("message").equals("OK")){
+//                    SharedPreferences sp = getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = sp.edit();
+//                    editor.putBoolean("LOGIN", true);
+//                    editor.putString("TOKEN", resultJson.getString("user_token"));
+//                    editor.commit();
+                    Intent mainIntent = new Intent(getApplicationContext(),MainNavigation.class);
+                    startActivity(mainIntent);
+                    finish();
+                    Toast toast = Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Login FAIL", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            super.onPostExecute(resultJson);
+        }
     }
 
     private class UserJson extends AsyncTask<String, Integer, JSONObject> {
@@ -129,9 +175,11 @@ public class LoginActivity extends Activity {
         protected void onPostExecute(JSONObject resultJson) {
             try {
                 if (resultJson.getString("message").equals("OK")){
+                    Log.d("STRING",resultJson.toString());
                     SharedPreferences sp = getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putBoolean("LOGIN", true);
+                    editor.putString("TOKEN", resultJson.getString("user_token"));
                     editor.commit();
 
                     Toast toast = Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT);

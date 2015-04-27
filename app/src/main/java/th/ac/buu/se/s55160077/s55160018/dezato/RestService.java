@@ -335,6 +335,7 @@ public class RestService {
             jsonObject.put("user_password",pw);
             //      jsonObject.put("guarderiasIdGuarderias",jsonObject2);
             json = jsonObject.toString();
+            Log.d("STRING",json);
             StringEntity se = new StringEntity(json);
             // 6. set httpPost Entity
             httpPut.setEntity(se);

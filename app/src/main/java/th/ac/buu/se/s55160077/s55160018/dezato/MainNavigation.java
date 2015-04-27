@@ -86,6 +86,7 @@ public class MainNavigation extends Activity
                 SharedPreferences sp = getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sp.edit();
                 editor.putBoolean("LOGIN", false);
+                editor.putString("TOKEN", "");
                 editor.commit();
                 final Intent mainIntent = new Intent(MainNavigation.this, LoginActivity.class);
                 MainNavigation.this.startActivity(mainIntent);

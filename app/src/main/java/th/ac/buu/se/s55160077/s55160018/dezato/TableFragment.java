@@ -9,6 +9,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -223,6 +224,12 @@ public class TableFragment extends Fragment implements AdapterView.OnItemClickLi
                                 .replace(R.id.container, BillFragment.newInstance(1))
                                 .addToBackStack("tag")
                                 .commit();
+                    }
+                    else if((menuItem.getItemId() == R.id.chkbill))
+                    {
+                        Intent mainIntent = new Intent(getActivity(),CheckBillActivity.class);
+                        startActivity(mainIntent);
+                        Toast.makeText(getActivity(), "เช็คบิล", Toast.LENGTH_SHORT).show();
                     }
                     else if((menuItem.getItemId() == R.id.ceating))
                     {
