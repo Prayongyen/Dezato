@@ -33,7 +33,7 @@ public class FoodListAdapter extends BaseAdapter {
     List<FoodItem> mItem;
     ImageLoader imageLoader;
     OrderItem orderItem;
-    int foodQty;
+
 
     public FoodListAdapter(Context context, List<FoodItem> item){
         this.mContext= context;
@@ -102,6 +102,7 @@ public class FoodListAdapter extends BaseAdapter {
         final View finalConvertView = convertView;
 
         addOrder.setOnClickListener(new View.OnClickListener() {
+            int FoodQty = 0;
             @Override
             public void onClick(View view) {
 
@@ -114,6 +115,7 @@ public class FoodListAdapter extends BaseAdapter {
 
                 //there are a lot of settings, for dialog, check them all out!
                 dialog.show();
+
                 final SeekBar seekbar = (SeekBar) dialog.findViewById(R.id.size_seekbar);
                 final ImageView foodImg = (ImageView) dialog.findViewById(R.id.foodImg);
                 imageLoader.DisplayImage("http://"+ip+"/dezatoshop/foodimage/"+item.getFood_path(), foodImg);
@@ -133,10 +135,11 @@ public class FoodListAdapter extends BaseAdapter {
                     }
                 });
                 final Button conbtn = (Button) dialog.findViewById(R.id.conbtn);
+
                 conbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(foodQty == 0)
+                        if(FoodQty == 0)
                         {
                             Toast.makeText(mContext,"Order Can't Be Zero" , Toast.LENGTH_SHORT).show();
                         }
@@ -148,7 +151,7 @@ public class FoodListAdapter extends BaseAdapter {
                             orderItem = new OrderItem();
                             orderItem.setFood_id(item.getFood_id());
                             orderItem.setOrder_no(order_no);
-                            orderItem.setOrder_qty(String.valueOf(foodQty));
+                            orderItem.setOrder_qty(String.valueOf(FoodQty));
                             orderItem.setTable_id(txtTableNo);
                             new AddFoodOrder().execute(orderItem);
                             dialog.dismiss();
@@ -160,7 +163,7 @@ public class FoodListAdapter extends BaseAdapter {
                 seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progresValue, boolean b) {
-                        foodQty = progresValue;
+                        FoodQty = progresValue;
                         count.setText(item.getFood_name()+" : " +String.valueOf(progresValue)+" Order");
                     }
                     @Override
