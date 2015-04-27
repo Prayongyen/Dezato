@@ -92,8 +92,6 @@ public class FoodOrderListFragment  extends ListFragment {
             SharedPreferences sf = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
             String ip = sf.getString("IP","");
             String url = "http://"+ip+"/dezatoshop/rest/index.php/api/c_dz_order/ordertablebybillno/format/json";
-            Log.d("STRING",txtTableNo);
-            Log.d("STRING",order_no);
             RestService re = new RestService();
             JSONObject jsonobject =  re.getOrderbyTableBill(url,txtTableNo,order_no);
 
