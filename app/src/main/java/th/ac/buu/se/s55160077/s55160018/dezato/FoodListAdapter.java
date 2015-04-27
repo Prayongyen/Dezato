@@ -155,6 +155,7 @@ public class FoodListAdapter extends BaseAdapter {
                             orderItem.setTable_id(txtTableNo);
                             new AddFoodOrder().execute(orderItem);
                             dialog.dismiss();
+                            FoodQty = 0;
                         }
                     }
                 });
