@@ -78,7 +78,7 @@ public class OrderFragment extends Fragment {
             case R.id.btnAccept : {
                 getFragmentManager().popBackStack();
 
-                Toast.makeText(getActivity(), "สร้างรายการสำเร็จ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Order Create", Toast.LENGTH_SHORT).show();
                 new addBill().execute();
                 return true;
             }
@@ -161,13 +161,15 @@ public class OrderFragment extends Fragment {
     }
 
     private class addBill extends AsyncTask<String, Integer, Void> {
+        SharedPreferences sp = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
+        SharedPreferences sd = getActivity().getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
         @Override
         protected Void doInBackground(String... params) {
 
-            SharedPreferences sp = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
+
             String ip = sp.getString("IP","");
             String name = sp.getString("USERNAME","");
-            SharedPreferences sd = getActivity().getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
+
             String txtTableNo = sd.getString("txtTableNo","");
             String order_no = sd.getString("order_no","");
             String url = "http://"+ip+"/dezatoshop/rest/index.php/api/c_dz_order/updatebill/table_id/"+txtTableNo+"/order_no/"+order_no+"/format/json";

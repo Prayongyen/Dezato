@@ -69,7 +69,7 @@ public class BillFragment extends Fragment implements AdapterView.OnItemClickLis
             public void onClick(View view) {
                 Intent mainIntent = new Intent(getActivity(),CheckBillActivity.class);
                 startActivity(mainIntent);
-                Toast.makeText(getActivity(), "เช็คบิล", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Check Bill", Toast.LENGTH_SHORT).show();
             }
         });
         GridView gridView = (GridView) rootView.findViewById(R.id.tableGridView);
@@ -162,7 +162,9 @@ public class BillFragment extends Fragment implements AdapterView.OnItemClickLis
 
             // initialize the GridView
             GridView gridView = (GridView) getActivity().findViewById(R.id.tableGridView);
+
             gridView.setAdapter(billItemAdapter);
+            billItemAdapter.notifyDataSetChanged();
 
 
             super.onPostExecute(jsonobject);
