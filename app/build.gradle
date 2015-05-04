@@ -6,15 +6,24 @@ android {
 
     defaultConfig {
         applicationId "th.ac.buu.se.s55160077.s55160018.dezato"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+    }
+    signingConfigs {
+        release {
+            storeFile file("C:/Users/LUKHINNN/AndroidStudioProjects/dezatokey.jks")
+            storePassword "123456789"
+            keyAlias "dezatokey"
+            keyPassword "123456789"
+        }
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
