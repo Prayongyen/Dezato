@@ -58,10 +58,22 @@ public class BillFragment extends Fragment implements AdapterView.OnItemClickLis
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         mItems = new ArrayList<BillItem>();
         new billbytable().execute();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.fragment_table_order, container, false);
         Button btncon = (Button) rootView.findViewById(R.id.conbtn);
         btncon.setOnClickListener(new View.OnClickListener() {
@@ -119,12 +131,14 @@ public class BillFragment extends Fragment implements AdapterView.OnItemClickLis
         dialogFragment.show(getFragmentManager(), "DialogFragmentwWithListFragment");
     }
     private class billbytable extends AsyncTask<String, Integer, JSONObject> {
+        SharedPreferences sp = getActivity().getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
+        SharedPreferences sf = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
         @Override
         protected JSONObject doInBackground(String... params) {
-            SharedPreferences sp = getActivity().getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
+
             String txtTableNo = sp.getString("txtTableNo","");
             String order_no = sp.getString("order_no","");
-            SharedPreferences sf = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
+
             String ip = sf.getString("IP","");
             String url = "http://"+ip+"/dezatoshop/rest/index.php/api/c_dz_order/billbytable/format/json";
 
@@ -137,7 +151,6 @@ public class BillFragment extends Fragment implements AdapterView.OnItemClickLis
 
         @Override
         protected void onPostExecute(JSONObject jsonobject) {
-            SharedPreferences sp = getActivity().getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
             String txtTableNo = sp.getString("txtTableNo","");
 
