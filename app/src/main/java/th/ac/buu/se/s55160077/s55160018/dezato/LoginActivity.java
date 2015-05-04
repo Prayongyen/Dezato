@@ -36,19 +36,10 @@ import java.util.Date;
 public class LoginActivity extends Activity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
+    protected void onResume() {
+        super.onResume();
         SharedPreferences sp = getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
-
-        EditText editIP = (EditText)findViewById(R.id.editIP);
-        EditText editName = (EditText)findViewById(R.id.editUser);
-
-        editIP.setText(sp.getString("IP",""));
-        editName.setText(sp.getString("USERNAME",""));
-
-        InternetChecking internetChecking = new InternetChecking(getApplicationContext());
+        InternetChecking internetChecking = new InternetChecking(LoginActivity.this);
         if(internetChecking.isInternetConnected())
         {
 
@@ -61,6 +52,22 @@ public class LoginActivity extends Activity {
         {
             internetChecking.ShowAlertNetwork();
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+
+        SharedPreferences sp = getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
+
+        EditText editIP = (EditText)findViewById(R.id.editIP);
+        EditText editName = (EditText)findViewById(R.id.editUser);
+
+        editIP.setText(sp.getString("IP",""));
+        editName.setText(sp.getString("USERNAME",""));
+
+
 
     }
 
