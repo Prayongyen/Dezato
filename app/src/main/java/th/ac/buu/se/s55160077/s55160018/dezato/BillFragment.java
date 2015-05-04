@@ -3,6 +3,7 @@ package th.ac.buu.se.s55160077.s55160018.dezato;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -131,8 +132,23 @@ public class BillFragment extends Fragment implements AdapterView.OnItemClickLis
         dialogFragment.show(getFragmentManager(), "DialogFragmentwWithListFragment");
     }
     private class billbytable extends AsyncTask<String, Integer, JSONObject> {
+        ProgressDialog pd;
         SharedPreferences sp = getActivity().getSharedPreferences("TABLE_INFO", Context.MODE_PRIVATE);
         SharedPreferences sf = getActivity().getSharedPreferences("IP_USERNAME", Context.MODE_PRIVATE);
+        @Override
+        protected void onPreExecute() {
+            pd = new ProgressDialog(getActivity());
+            pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            pd.setTitle("Loading...");
+            pd.setMessage("Loading Table...");
+            pd.setCancelable(false);
+            pd.setIndeterminate(false);
+            pd.setMax(100);
+            pd.setProgress(0);
+            pd.show();
+            super.onPreExecute();
+
+        }
         @Override
         protected JSONObject doInBackground(String... params) {
 
@@ -163,7 +179,11 @@ public class BillFragment extends Fragment implements AdapterView.OnItemClickLis
                     billItem.setOrder_no(String.valueOf(i));
                     billItem.setTable_id(txtTableNo);
                     mItems.add(billItem);
+                    int c = (i * 100 )/ length;
+                    publishProgress(c);
                 }
+
+
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -175,12 +195,16 @@ public class BillFragment extends Fragment implements AdapterView.OnItemClickLis
 
             // initialize the GridView
             GridView gridView = (GridView) getActivity().findViewById(R.id.tableGridView);
-
             gridView.setAdapter(billItemAdapter);
-            billItemAdapter.notifyDataSetChanged();
 
-
+            pd.dismiss();
             super.onPostExecute(jsonobject);
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            pd.setProgress(values[0]);
+            super.onProgressUpdate(values);
         }
     }
 
